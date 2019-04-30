@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="这是首页"
-        android:textSize="30sp"/>
-    <TextView
-        android:id="@+id/main_btn1"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_margin="100dp"
-        android:background="#f91f39"
-        android:textColor="#ffffff"
-        android:gravity="center"
-        android:text="测试跳转"
-        android:textSize="16sp"/>
+    <data>
 
-</LinearLayout>
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/rl_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_shouye">
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="这是首页"
+                android:textSize="30sp" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</layout>
