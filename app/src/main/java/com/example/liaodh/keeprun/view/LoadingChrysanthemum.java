@@ -5,6 +5,8 @@ import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.example.liaodh.keeprun.R;
@@ -31,5 +33,23 @@ public class LoadingChrysanthemum extends RelativeLayout{
 
     public ViewChrysanthemumLoadingBinding getBinding(){
         return mBinding;
+    }
+
+    private static LoadingChrysanthemum mLoadingChrysanthemum;
+    public static void showLoadingChrysanthemum(ViewGroup view,Context context) {
+        if(mLoadingChrysanthemum == null) {
+            mLoadingChrysanthemum = new LoadingChrysanthemum(context);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout
+                    .LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+            view.addView(mLoadingChrysanthemum,params);
+        } else {
+            mLoadingChrysanthemum.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public static void hideLoadingChrysanthemum() {
+        if(mLoadingChrysanthemum != null) {
+            mLoadingChrysanthemum.setVisibility(View.INVISIBLE);
+        }
     }
 }

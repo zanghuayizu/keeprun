@@ -27,22 +27,8 @@ public class MsgViewModel extends BaseViewModel {
     }
 
     private void getWeatherInfoFromNet() {
-        String city = null;
-        try {
-            city = java.net.URLEncoder.encode("北京", "utf-8");
-            //拼地址
-            String apiUrl = "http://t.weather.sojson.com/api/weather/city/101030100";
-            //开始请求
-            URL url= new URL(apiUrl);
-            mWeatherInfo.setValue(new WeatherInfo());
-            URLConnection open = url.openConnection();
-            InputStream input = open.getInputStream();
-            //这里转换为String，带上包名，怕你们引错包
-            String result = input.toString();
-            //输出
-            System.out.println(result);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //请求天气信息
+        WeatherInfo weatherInfo = new WeatherInfo();
+        mWeatherInfo.setValue(weatherInfo);
     }
 }

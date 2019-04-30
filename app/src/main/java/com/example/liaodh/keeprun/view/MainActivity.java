@@ -95,8 +95,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     public void switchFragment(View v, String toTag) {
         this.currTextView = (TextView) v;
-        currTextView.setTextColor(Color.parseColor(String.valueOf(R.color.select_color)));
-        lastTextView.setTextColor(Color.parseColor(String.valueOf(R.color.not_select_color)));
+        currTextView.setTextColor(Color.parseColor("#ffffff"));
+        lastTextView.setTextColor(Color.parseColor("#605e5e"));
         MyFragmentActivity mf = new MyFragmentActivity();
         mf.switchFragment(getSupportFragmentManager(), toTag, this.fragmentTag);
         this.lastTextView = (TextView) v;
