@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="这是计划页"
-        android:textSize="30sp"/>
+        android:layout_height="match_parent">
 
-</LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="这是计划页"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/tianqi"
+            android:layout_width="wrap_content"
+            android:text="test"
+            android:textSize="22sp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</layout>

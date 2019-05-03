@@ -3,6 +3,7 @@ package com.example.liaodh.keeprun.view;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,7 +11,9 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +22,21 @@ import android.widget.RelativeLayout;
 import com.example.liaodh.keeprun.R;
 import com.example.liaodh.keeprun.databinding.FragmentMainBinding;
 import com.example.liaodh.keeprun.livedata.WeatherInfo;
+import com.example.liaodh.keeprun.util.AssetsUtil;
+import com.example.liaodh.keeprun.util.HttpUtil;
+import com.example.liaodh.keeprun.util.LocationUtil;
 import com.example.liaodh.keeprun.viewmodel.MsgViewModel;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.TimeZone;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 首页
@@ -30,6 +44,7 @@ import java.util.TimeZone;
 public class MainFragment extends Fragment {
     private FragmentMainBinding mainBinding;
     MsgViewModel msgViewModel;
+    private Context context;
 
     @Nullable
     @Override
@@ -42,6 +57,7 @@ public class MainFragment extends Fragment {
 
     private View initView(LayoutInflater inflater, ViewGroup container) {
         mainBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false);
+        this.context = getContext();
         initViewData();
         checkNetWork();
         return mainBinding.getRoot();
@@ -49,7 +65,25 @@ public class MainFragment extends Fragment {
 
     private void initViewData() {
         initTime();
+        LocationUtil.getCNBylocation(getContext());
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        initLocation();
+        initListener();
+    }
+
+    private void initListener() {
+
+    }
+
+    private void initLocation() {
+        String cityName = LocationUtil.cityName;
+        if (!TextUtils.isEmpty(cityName)) {
+            mainBinding.currentWhere.setText(cityName);
+        }
     }
 
     private void initTime() {
@@ -77,7 +111,7 @@ public class MainFragment extends Fragment {
             mWay = "六";
         }
         mainBinding.currentDayRiqi.setText(current_day_riqi);
-        mainBinding.currentDayXingqi.setText("星期"+mWay);
+        mainBinding.currentDayXingqi.setText("星期" + mWay);
     }
 
     private void initViewModel() {
@@ -85,17 +119,47 @@ public class MainFragment extends Fragment {
     }
 
     private void checkNetWork() {
+        if (TextUtils.isEmpty(LocationUtil.cityName)) {
+            LocationUtil.getCNBylocation(context);
+        }
+        String cityCode = AssetsUtil.getCityCodeByCityNameFromJson(context, LocationUtil.cityName);
         if (msgViewModel != null) {
-            LoadingChrysanthemum.showLoadingChrysanthemum(mainBinding.rlRoot, getContext());
-            MutableLiveData<WeatherInfo> userResultMutableLiveData = msgViewModel.getWeatherInfo();
-            userResultMutableLiveData.observe(this, new Observer<WeatherInfo>() {
+            String address = "http://t.weather.sojson.com/api/weather/city/" + cityCode;
+            HttpUtil.sendOkHttpRequest(address, new Callback() {
                 @Override
-                public void onChanged(@Nullable WeatherInfo userResult) {
-                    //TODO
-                    LoadingChrysanthemum.hideLoadingChrysanthemum();
+                public void onFailure(Call call, IOException e) {
+                    Log.e("MainFragment", e.toString());
+                }
+
+                @Override
+                public void onResponse(Call call, final Response response) throws IOException {
+                    if (!response.isSuccessful()) return;
+                    Log.e("MainFragment", response.toString());
+
+                    if (getActivity() != null) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    if (response.code() <= 200) {
+                                        JSONObject jsonObject = new JSONObject(response.body().string());
+                                        JSONObject cityinfoObject = jsonObject.optJSONObject("cityInfo");
+                                        String cityName = cityinfoObject.optString("city");
+                                        JSONObject weatherObject = jsonObject.optJSONObject("data");
+                                        String wendu = weatherObject.optString("wendu") + "℃";
+                                        if (!TextUtils.isEmpty(wendu)){
+                                            mainBinding.currentDayWeather.setText(wendu);
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    }
+
                 }
             });
-
         }
     }
 
@@ -122,7 +186,7 @@ public class MainFragment extends Fragment {
     }
 
     //在主线程里面处理消息并更新UI界面
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
