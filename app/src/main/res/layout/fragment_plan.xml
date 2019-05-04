@@ -10,20 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
+        <EditText
+            android:id="@+id/textview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:text="这是计划页"
             android:textSize="30sp" />
 
-        <Button
-            android:id="@+id/tianqi"
-            android:layout_width="wrap_content"
-            android:text="test"
-            android:textSize="22sp"
-            android:layout_height="wrap_content" />
 
     </LinearLayout>
 </layout>
