@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CirclePercentBar">
+        <attr name="arcColor" format="color"/>
+        <attr name="arcWidth" format="dimension"/>
+        <attr name="centerTextColor" format="color"/>
+        <attr name="centerTextSize" format="dimension"/>
+        <attr name="circleRadius" format="dimension"/>
+        <attr name="arcStartColor" format="color"/>
+        <attr name="arcEndColor" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="SemicircleView">
+        <attr name="radius" format="dimension" />
+        <attr name="strokeWidth" format="dimension" />
+        <attr name="bgArcColor" format="color" />
+        <attr name="usedArcColor" format="color" />
+        <attr name="usedTextSize" format="dimension" />
+        <attr name="usedPercentTextSize" format="dimension" />
+        <attr name="percentTextSize" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="ColorArcProgressBar">
+        <attr name="front_color1" format="color"/>
+        <attr name="front_color2" format="color"/>
+        <attr name="front_color3" format="color"/>
+        <attr name="total_engle" format="dimension"/>
+        <attr name="back_width" format="dimension"/>
+        <attr name="front_width" format="dimension"/>
+        <attr name="is_need_title" format="dimension"/>
+        <attr name="is_need_content" format="dimension"/>
+        <attr name="is_need_unit" format="dimension"/>
+        <attr name="is_need_dial" format="dimension"/>
+        <attr name="string_unit" format="dimension"/>
+        <attr name="string_title" format="dimension"/>
+        <attr name="current_value" format="dimension"/>
+        <attr name="max_value" format="dimension"/>
+    </declare-styleable>
+</resources>
