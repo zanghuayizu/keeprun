@@ -101,14 +101,17 @@
                         android:textSize="28sp" />
                 </RadioGroup>
 
-                <Button
-                    android:id="@+id/next"
-                    android:layout_width="wrap_content"
+                <com.example.liaodh.keeprun.view.Common.FoxTextButton
+                    android:id="@+id/login"
+                    android:layout_width="132dp"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="8dp"
                     android:layout_gravity="center"
-                    android:textSize="18sp"
-                    android:layout_marginTop="5dp"
+                    android:background="@drawable/send_verify"
+                    android:gravity="center"
                     android:text="继续"
-                    android:layout_height="wrap_content" />
+                    android:textColor="#777777"
+                    android:textSize="16sp" />
             </LinearLayout>
 
 
