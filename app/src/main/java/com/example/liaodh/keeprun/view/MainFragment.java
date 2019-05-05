@@ -1,7 +1,5 @@
 package com.example.liaodh.keeprun.view;
 
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -17,17 +15,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.example.liaodh.keeprun.R;
 import com.example.liaodh.keeprun.databinding.FragmentMainBinding;
-import com.example.liaodh.keeprun.livedata.WeatherInfo;
 import com.example.liaodh.keeprun.util.AssetsUtil;
 import com.example.liaodh.keeprun.util.HttpUtil;
 import com.example.liaodh.keeprun.util.LocationUtil;
+import com.example.liaodh.keeprun.util.SpUserInfoUtil;
 import com.example.liaodh.keeprun.viewmodel.MsgViewModel;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -59,31 +55,17 @@ public class MainFragment extends Fragment {
         mainBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false);
         this.context = getContext();
         initViewData();
-        checkNetWork();
         return mainBinding.getRoot();
     }
 
     private void initViewData() {
         initTime();
-        LocationUtil.getCNBylocation(getContext());
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         initLocation();
-        initListener();
-    }
-
-    private void initListener() {
-
     }
 
     private void initLocation() {
-        String cityName = LocationUtil.cityName;
-        if (!TextUtils.isEmpty(cityName)) {
-            mainBinding.currentWhere.setText(cityName);
-        }
+        mainBinding.currentWhere.setText(SpUserInfoUtil.getCityName());
+        mainBinding.currentDayWeather.setText(SpUserInfoUtil.getWeatherToday());
     }
 
     private void initTime() {
@@ -116,51 +98,6 @@ public class MainFragment extends Fragment {
 
     private void initViewModel() {
         msgViewModel = ViewModelProviders.of(this).get(MsgViewModel.class);
-    }
-
-    private void checkNetWork() {
-        if (TextUtils.isEmpty(LocationUtil.cityName)) {
-            LocationUtil.getCNBylocation(context);
-        }
-        String cityCode = AssetsUtil.getCityCodeByCityNameFromJson(context, LocationUtil.cityName);
-        if (msgViewModel != null) {
-            String address = "http://t.weather.sojson.com/api/weather/city/" + cityCode;
-            HttpUtil.sendOkHttpRequest(address, new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    Log.e("MainFragment", e.toString());
-                }
-
-                @Override
-                public void onResponse(Call call, final Response response) throws IOException {
-                    if (!response.isSuccessful()) return;
-                    Log.e("MainFragment", response.toString());
-
-                    if (getActivity() != null) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    if (response.code() <= 200) {
-                                        JSONObject jsonObject = new JSONObject(response.body().string());
-                                        JSONObject cityinfoObject = jsonObject.optJSONObject("cityInfo");
-                                        String cityName = cityinfoObject.optString("city");
-                                        JSONObject weatherObject = jsonObject.optJSONObject("data");
-                                        String wendu = weatherObject.optString("wendu") + "℃";
-                                        if (!TextUtils.isEmpty(wendu)){
-                                            mainBinding.currentDayWeather.setText(wendu);
-                                        }
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
-                    }
-
-                }
-            });
-        }
     }
 
     @Override

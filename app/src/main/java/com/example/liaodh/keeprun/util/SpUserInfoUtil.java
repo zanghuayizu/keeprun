@@ -103,4 +103,52 @@ public class SpUserInfoUtil {
         return mSp.getString(WEEK_DIS,"0");
     }
 
+    private static final String IS_BOY = "user_sex";
+
+    public static boolean setIsBoy(boolean isBoy){
+        return mSp.edit().putBoolean(IS_BOY,isBoy).commit();
+    }
+
+    public static boolean getIsBoy(){
+        return mSp.getBoolean(IS_BOY,false);
+    }
+
+    private static final String USER_TODAY_STEP = "user_today_step";
+
+    public static boolean setTodaySteps(float todaySteps) {
+        return mSp.edit().putFloat(USER_TODAY_STEP,todaySteps).commit();
+    }
+
+    public static float getTodaySteps(){
+        return mSp.getFloat(USER_TODAY_STEP,0);
+    }
+
+    private static final String CITY_NAME = "city_name";
+
+    public static boolean setCityName(String cityName){
+        return mSp.edit().putString(CITY_NAME,cityName).commit();
+    }
+
+    public static String getCityName() {
+        return mSp.getString(CITY_NAME,"北京市");
+    }
+
+    private static final String CITY_CODE = "city_code";
+    public static String getCityCode() {
+        return mSp.getString(CITY_CODE,"101010100");
+    }
+
+    public static boolean setCityCode(String cityCode){
+        return mSp.edit().putString(CITY_CODE,cityCode).commit();
+    }
+
+    private static final String WEATHER_TODAY = "weather_today";
+
+    public static boolean setWeatherToday(String weatherToday) {
+        return mSp.edit().putString(WEATHER_TODAY,weatherToday).commit();
+    }
+
+    public static String getWeatherToday(){
+        return mSp.getString(WEATHER_TODAY,"0");
+    }
 }

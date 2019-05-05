@@ -1,5 +1,6 @@
 package com.example.liaodh.keeprun.view;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.net.Uri;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.liaodh.keeprun.R;
 import com.example.liaodh.keeprun.databinding.FragmentUserBinding;
+import com.example.liaodh.keeprun.view.Common.UserEditActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 public class UserFragment extends Fragment implements View.OnClickListener {
@@ -48,6 +50,8 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.icon_in:
                 //设置用户信息页面
+                Intent intent = new Intent(getActivity(),UserEditActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <RelativeLayout
+            android:layout_width="395.5dp"
+            android:layout_height="329dp">
+
+            <ImageView
+                android:layout_width="39dp"
+                android:layout_height="97dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="29dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_back_dialog_fragment_login_netease_email" />
+
+            <ImageButton
+                android:id="@+id/login_back"
+                android:layout_width="47.7dp"
+                android:layout_height="49.8dp"
+                android:background="@drawable/ic_btn_back_dialog_fragment_login_netease_email"
+                android:scaleType="fitXY" />
+
+            <LinearLayout
+                android:layout_width="356dp"
+                android:layout_height="324dp"
+                android:layout_marginLeft="39.5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_dialog_fragment_login_netease_email"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="22dp"
+                    android:gravity="center"
+                    android:text="让大家认识你"
+                    android:textColor="#524939"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"
+                    android:text="你的昵称 ?"
+                    android:textSize="28sp" />
+
+                <com.example.liaodh.keeprun.view.Common.FoxEditTextView
+                    android:id="@+id/login_edit_phone_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="46dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_shape_fox_edit_text"
+                    android:gravity="center"
+                    android:imeOptions="flagNoExtractUi"
+                    android:minWidth="194dp"
+                    android:maxLength="8"
+                    android:layout_marginTop="12dp"
+                    android:singleLine="true"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"
+                    android:text="你的性别 ?"
+                    android:textSize="28sp" />
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/user_sex_boy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="男"
+                        android:textSize="28sp" />
+
+                    <RadioButton
+                        android:id="@+id/user_sex_girl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:text="女"
+                        android:textSize="28sp" />
+                </RadioGroup>
+
+                <Button
+                    android:id="@+id/next"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="18sp"
+                    android:layout_marginTop="5dp"
+                    android:text="继续"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</layout>

@@ -23,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.MainActivity$MyFragmentActivity" />
+        <activity android:name=".view.Common.UserEditActivity" />
     </application>
 
 </manifest>

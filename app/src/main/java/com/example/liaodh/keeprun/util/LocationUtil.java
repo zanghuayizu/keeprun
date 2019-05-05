@@ -106,14 +106,14 @@ public class LocationUtil {
             cityName = "无法获取地理信息";
         }
         try {
-            addList = geocoder.getFromLocation(lat, lng, 1);    //解析经纬度
+            addList = geocoder.getFromLocation(lat, lng, 2);    //解析经纬度
         } catch (IOException e) {
             e.printStackTrace();
         }
         if (addList != null && addList.size() > 0) {
             for (int i = 0; i < addList.size(); i++) {
                 Address add = addList.get(i);
-                mcityName += add.getLocality();
+                mcityName += add.getSubLocality();
             }
         }
         return mcityName;

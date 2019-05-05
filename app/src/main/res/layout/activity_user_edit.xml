@@ -38,12 +38,13 @@
                 android:textSize="25sp" />
 
             <Button
+                android:id="@+id/save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="2dp"
-                android:background="5D478B"
+                android:background="#5D478B"
                 android:text="保存"
                 android:textColor="#FFF"
                 android:textSize="25sp" />

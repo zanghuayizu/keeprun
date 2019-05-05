@@ -1,5 +1,6 @@
 package com.example.liaodh.keeprun.view;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -10,15 +11,16 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.liaodh.keeprun.R;
+import com.example.liaodh.keeprun.util.SpUserInfoUtil;
+import com.example.liaodh.keeprun.view.Common.UserEditActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private String fragmentTag;
-    private TextView main, plan,user,run;
+    private TextView main,user,run;
     private TextView lastTextView;
     private TextView currTextView;
     private Fragment mainFragment = new MainFragment(),
-            planFragment = new PlanFragment(),
             userFragment = new UserFragment(),
             runFragment = new RunFragment();
 
@@ -37,10 +39,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.getSupportFragmentManager()                                       // 获取管理类
                 .beginTransaction()                                            // 开启事物
                 .add(R.id.main_content, mainFragment, "mainFragment")       // 添加fragment
-                .add(R.id.main_content, planFragment, "planFragment")       // 添加fragment
                 .add(R.id.main_content, runFragment, "runFragment")         // 添加fragment
                 .add(R.id.main_content, userFragment, "userFragment")       // 添加fragment
-                .hide(planFragment)
                 .hide(runFragment)
                 .hide(userFragment)
                 .commit();                                                    // 提交
@@ -58,11 +58,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void initView() {
         main =  findViewById(R.id.main);
-        plan =  findViewById(R.id.plan);
         run  =  findViewById(R.id.run);
         user =  findViewById(R.id.user);
         main.setOnClickListener(this);
-        plan.setOnClickListener(this);
         run.setOnClickListener(this);
         user.setOnClickListener(this);
     }
@@ -73,10 +71,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.main:
+                if (mainFragment != null){
+                    this.getSupportFragmentManager().beginTransaction().attach(mainFragment).commit();
+                }
                 this.switchFragment(v,"mainFragment");
-                break;
-            case R.id.plan:
-                this.switchFragment(v,"planFragment");
                 break;
             case R.id.run:
                 this.switchFragment(v,"runFragment");
@@ -114,6 +112,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (fo != null && to != null && fo != to) {
                 fm.beginTransaction().hide(fo).show(to).commit();
             }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!SpUserInfoUtil.isUserLogin()){
+            Intent intent = new Intent(this, UserEditActivity.class);
+            startActivity(intent);
         }
     }
 }

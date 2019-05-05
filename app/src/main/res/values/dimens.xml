@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="activity_bottom_textsize">22sp</dimen>
+    <dimen name="fox_edit_text_width">17dp</dimen>
+    <dimen name="fox_edit_text_height">17dp</dimen>
 </resources>

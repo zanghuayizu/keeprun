@@ -32,16 +32,6 @@
             android:textColor="#ffffff"/>
 
         <TextView
-            android:id="@+id/plan"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="@dimen/activity_bottom_textsize"
-            android:text="计划"
-            android:textColor="#605e5e"/>
-
-        <TextView
             android:id="@+id/run"
             android:layout_width="0dp"
             android:layout_weight="1"
