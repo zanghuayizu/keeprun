@@ -40,8 +40,9 @@
 
             <ImageView
                 android:id="@+id/icon_in"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_marginRight="15dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:src="@drawable/ja_detaildisclosure" />
@@ -66,9 +67,10 @@
 
             <ImageView
                 android:id="@+id/icon_user_body"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="16dp"
                 android:layout_alignParentRight="true"
                 android:src="@drawable/ja_detaildisclosure" />
 
@@ -139,14 +141,6 @@
                 android:layout_marginLeft="12dp"
                 android:text="我的运动数据"
                 android:textSize="20sp" />
-
-            <ImageView
-                android:id="@+id/user_run_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/ja_detaildisclosure" />
 
         </RelativeLayout>
 
