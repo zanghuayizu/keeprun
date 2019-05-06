@@ -1,4 +1,4 @@
-package com.example.liaodh.keeprun.view.Common;
+package com.example.liaodh.keeprun.view;
 
 
 import android.content.Context;

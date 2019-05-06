@@ -2,7 +2,6 @@ package com.example.liaodh.keeprun.view;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,7 +13,6 @@ import android.view.ViewGroup;
 
 import com.example.liaodh.keeprun.R;
 import com.example.liaodh.keeprun.databinding.FragmentUserBinding;
-import com.example.liaodh.keeprun.view.Common.UserEditActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 public class UserFragment extends Fragment implements View.OnClickListener {

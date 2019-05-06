@@ -1,10 +1,12 @@
-package com.example.liaodh.keeprun.view.Common;
+package com.example.liaodh.keeprun.view;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.example.liaodh.keeprun.R;
 import com.example.liaodh.keeprun.databinding.ActivityUserEditBinding;
@@ -16,7 +18,10 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         initView();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     private void initView() {

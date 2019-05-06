@@ -14,12 +14,11 @@
             android:layout_width="395.5dp"
             android:layout_height="329dp">
 
-
             <LinearLayout
                 android:layout_width="356dp"
                 android:layout_height="324dp"
-                android:layout_centerInParent="true"
                 android:layout_marginTop="5dp"
+                android:layout_centerInParent="true"
                 android:background="@drawable/bg_dialog_fragment_login_netease_email"
                 android:orientation="vertical">
 
@@ -29,54 +28,31 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="16dp"
                     android:gravity="center"
-                    android:text="让大家了解你"
+                    android:text="让大家走近你"
                     android:textColor="#524939"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/location_image"
+                    android:layout_width="132dp"
+                    android:layout_height="120dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="12dp"
-                    android:text="你的身高 ?"
-                    android:textSize="28sp" />
+                    android:layout_marginTop="28dp"
+                    android:text="定位"
+                    android:textSize="25sp"
+                    android:gravity="bottom|right"
+                    android:background="@drawable/location" />
 
-                <com.example.liaodh.keeprun.view.FoxEditTextView
-                    android:id="@+id/user_height"
-                    android:layout_width="wrap_content"
+                <com.example.liaodh.keeprun.view.FoxTextButton
+                    android:id="@+id/location"
+                    android:layout_width="132dp"
                     android:layout_height="46dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/bg_shape_fox_edit_text"
+                    android:layout_marginTop="18dp"
                     android:gravity="center"
-                    android:imeOptions="flagNoExtractUi"
-                    android:maxLength="8"
-                    android:minWidth="194dp"
-                    android:singleLine="true"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="12dp"
-                    android:text="你的体重 ?"
-                    android:textSize="28sp" />
-
-                <com.example.liaodh.keeprun.view.FoxEditTextView
-                    android:id="@+id/user_weight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="46dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/bg_shape_fox_edit_text"
-                    android:gravity="center"
-                    android:imeOptions="flagNoExtractUi"
-                    android:maxLength="8"
-                    android:minWidth="194dp"
-                    android:singleLine="true"
-                    android:textSize="14sp" />
+                    android:textColor="#777777"
+                    android:textSize="16sp" />
 
                 <com.example.liaodh.keeprun.view.FoxTextButton
                     android:id="@+id/login"

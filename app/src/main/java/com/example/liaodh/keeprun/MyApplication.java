@@ -39,7 +39,7 @@ public class MyApplication extends Application implements SensorEventListener{
         LitePal.initialize(this);
         mInstance = this;
         startMyServiceCountStep();
-        startMyServiceGetWeatherMsg();
+        //startMyServiceGetWeatherMsg();
     }
 
     private void startMyServiceGetWeatherMsg() {

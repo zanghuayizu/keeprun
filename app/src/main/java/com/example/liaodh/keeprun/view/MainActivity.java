@@ -5,17 +5,20 @@ import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.example.liaodh.keeprun.R;
 import com.example.liaodh.keeprun.util.SpUserInfoUtil;
-import com.example.liaodh.keeprun.view.Common.UserEditActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
+    private static final String TAG = "MainActivity";
     private String fragmentTag;
     private TextView main,user,run;
     private TextView lastTextView;
@@ -27,7 +30,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //  第一步：创建4个继承自android.support.v4.app.Fragment的java文件,并一起创建对应的布局文件
         /**
            1）：在mainActivity.java文件同级目录新建名为fragment的目录    （用来放4个java文件）
@@ -119,8 +125,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onResume() {
         super.onResume();
         if (!SpUserInfoUtil.isUserLogin()){
-            Intent intent = new Intent(this, UserEditActivity.class);
-            startActivity(intent);
+            LoginDialogFirstFragment firstFragment = new LoginDialogFirstFragment();
+            FragmentTransaction ft = this.getSupportFragmentManager().beginTransaction();
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            firstFragment.show(ft,TAG);
         }
     }
 }
