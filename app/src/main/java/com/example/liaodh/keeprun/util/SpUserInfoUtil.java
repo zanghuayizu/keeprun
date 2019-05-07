@@ -130,12 +130,22 @@ public class SpUserInfoUtil {
     }
 
     public static String getCityName() {
-        return mSp.getString(CITY_NAME,"北京市");
+        return mSp.getString(CITY_NAME,"");
+    }
+
+    private static final String SUB_CITY_NAME = "sub_city_name";
+
+    public static boolean setSubCityName(String subCityName){
+        return mSp.edit().putString(SUB_CITY_NAME,subCityName).commit();
+    }
+
+    public static String getSubCityName(){
+        return mSp.getString(SUB_CITY_NAME,"");
     }
 
     private static final String CITY_CODE = "city_code";
     public static String getCityCode() {
-        return mSp.getString(CITY_CODE,"101010100");
+        return mSp.getString(CITY_CODE,"");
     }
 
     public static boolean setCityCode(String cityCode){

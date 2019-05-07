@@ -28,7 +28,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="16dp"
                     android:gravity="center"
-                    android:text="让大家走近你"
+                    android:text="让大家认识你"
                     android:textColor="#524939"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -39,7 +39,7 @@
                     android:layout_height="160dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="28dp"
-                    android:background="@drawable/takephoto" />
+                    android:src="@drawable/takephoto" />
 
 
                 <com.example.liaodh.keeprun.view.FoxTextButton

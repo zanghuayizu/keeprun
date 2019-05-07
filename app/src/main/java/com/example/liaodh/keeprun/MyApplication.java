@@ -39,46 +39,6 @@ public class MyApplication extends Application implements SensorEventListener{
         LitePal.initialize(this);
         mInstance = this;
         startMyServiceCountStep();
-        //startMyServiceGetWeatherMsg();
-    }
-
-    private void startMyServiceGetWeatherMsg() {
-        //从网络获取信息然后存入本地
-        String cityCode;
-        String address;
-        while (LocationUtil.cityName == null){
-            LocationUtil.getCNBylocation(getContext());
-        }
-        if (!TextUtils.isEmpty(SpUserInfoUtil.getCityName())
-                && (SpUserInfoUtil.getCityName().contains(LocationUtil.cityName)
-                || LocationUtil.cityName.contains(SpUserInfoUtil.getCityName()))){
-            cityCode = SpUserInfoUtil.getCityCode();
-        }else {
-            cityCode = AssetsUtil.getCityCodeByCityNameFromJson(getContext(), LocationUtil.cityName);
-            SpUserInfoUtil.setCityName(LocationUtil.cityName);
-            SpUserInfoUtil.setCityCode(cityCode);
-        }
-        address = "http://t.weather.sojson.com/api/weather/city/" + cityCode;
-        HttpUtil.sendOkHttpRequest(address, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response){
-                try {
-                    if (response.code() <= 200) {
-                        JSONObject jsonObject = new JSONObject(response.body().string());
-                        JSONObject weatherObject = jsonObject.optJSONObject("data");
-                        String wendu = weatherObject.optString("wendu") + "℃";
-                        SpUserInfoUtil.setWeatherToday(wendu);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     private SensorManager sensorManager;

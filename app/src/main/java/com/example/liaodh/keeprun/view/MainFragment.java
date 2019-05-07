@@ -60,11 +60,15 @@ public class MainFragment extends Fragment {
 
     private void initViewData() {
         initTime();
-        initLocation();
+        if (SpUserInfoUtil.isUserLogin()){
+            getWeatherInfo();
+            new WeatherThread().start();
+            initLocation();
+        }
     }
 
     private void initLocation() {
-        mainBinding.currentWhere.setText(SpUserInfoUtil.getCityName());
+        mainBinding.currentWhere.setText(SpUserInfoUtil.getSubCityName());
         mainBinding.currentDayWeather.setText(SpUserInfoUtil.getWeatherToday());
     }
 
@@ -122,6 +126,51 @@ public class MainFragment extends Fragment {
         }
     }
 
+    class WeatherThread extends Thread {
+        @Override
+        public void run() {
+            do {
+                try {
+                    Thread.sleep(30*60*1000);
+                    Message msg = new Message();
+                    msg.what = 2;  //消息(一个整型值)
+                    mHandler.sendMessage(msg);// 每隔1秒发送一个msg给mHandler
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } while (true);
+        }
+    }
+
+    private void getWeatherInfo(){
+        String address = "http://t.weather.sojson.com/api/weather/city/" + SpUserInfoUtil.getCityCode();
+        HttpUtil.sendOkHttpRequest(address, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+            }
+
+            @Override
+            public void onResponse(Call call, Response response){
+                try {
+                    if (response.code() <= 200) {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        JSONObject weatherObject = jsonObject.optJSONObject("data");
+                        final String wendu = weatherObject.optString("wendu") + "℃";
+                        SpUserInfoUtil.setWeatherToday(wendu);
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mainBinding.currentDayWeather.setText(wendu);
+                            }
+                        });
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
     //在主线程里面处理消息并更新UI界面
     private Handler mHandler = new Handler() {
         @Override
@@ -132,6 +181,9 @@ public class MainFragment extends Fragment {
                     long sysTime = System.currentTimeMillis();//获取系统时间
                     CharSequence sysTimeStr = DateFormat.format("hh:mm", sysTime);//时间显示格式
                     mainBinding.currentTime.setText(sysTimeStr); //更新时间
+                    break;
+                case 2:
+                    getWeatherInfo();
                     break;
                 default:
                     break;

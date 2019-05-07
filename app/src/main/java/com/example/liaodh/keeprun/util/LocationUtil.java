@@ -103,7 +103,7 @@ public class LocationUtil {
             lat = location.getLatitude();
             lng = location.getLongitude();
         } else {
-            cityName = "无法获取地理信息";
+            cityName = "";
         }
         try {
             addList = geocoder.getFromLocation(lat, lng, 2);    //解析经纬度
@@ -113,6 +113,8 @@ public class LocationUtil {
         if (addList != null && addList.size() > 0) {
             for (int i = 0; i < addList.size(); i++) {
                 Address add = addList.get(i);
+                SpUserInfoUtil.setCityName(add.getLocality() + add.getSubLocality());
+                SpUserInfoUtil.setSubCityName(add.getSubLocality());
                 mcityName += add.getSubLocality();
             }
         }

@@ -1,6 +1,5 @@
 package com.example.liaodh.keeprun.view;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -14,7 +13,16 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.example.liaodh.keeprun.R;
+import com.example.liaodh.keeprun.util.HttpUtil;
 import com.example.liaodh.keeprun.util.SpUserInfoUtil;
+
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -69,6 +77,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         main.setOnClickListener(this);
         run.setOnClickListener(this);
         user.setOnClickListener(this);
+        if (!SpUserInfoUtil.isUserLogin()){
+            LoginDialogFirstFragment firstFragment = new LoginDialogFirstFragment();
+            FragmentTransaction ft = this.getSupportFragmentManager().beginTransaction();
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            firstFragment.show(ft,TAG);
+        }
     }
 
     /**
@@ -118,17 +132,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (fo != null && to != null && fo != to) {
                 fm.beginTransaction().hide(fo).show(to).commit();
             }
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (!SpUserInfoUtil.isUserLogin()){
-            LoginDialogFirstFragment firstFragment = new LoginDialogFirstFragment();
-            FragmentTransaction ft = this.getSupportFragmentManager().beginTransaction();
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            firstFragment.show(ft,TAG);
         }
     }
 }

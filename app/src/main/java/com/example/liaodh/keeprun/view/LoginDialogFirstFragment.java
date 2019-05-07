@@ -1,18 +1,31 @@
 package com.example.liaodh.keeprun.view;
 
+import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.liaodh.keeprun.R;
 import com.example.liaodh.keeprun.databinding.LogindialogFragementFirstBinding;
+import com.example.liaodh.keeprun.util.HttpUtil;
+import com.example.liaodh.keeprun.util.SpUserInfoUtil;
 
-public class LoginDialogFirstFragment extends BaseDialogFragment implements View.OnClickListener {
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+public class LoginDialogFirstFragment extends BaseDialogFragment implements View.OnClickListener,DialogInterface.OnKeyListener {
 
 
     private LogindialogFragementFirstBinding mBinding;
@@ -32,6 +45,7 @@ public class LoginDialogFirstFragment extends BaseDialogFragment implements View
 
     private void initListener() {
         mBinding.login.setOnClickListener(this);
+        getDialog().setOnKeyListener(this);
     }
 
     @Override
@@ -39,7 +53,6 @@ public class LoginDialogFirstFragment extends BaseDialogFragment implements View
         switch (view.getId()) {
             case R.id.login:
                 goSecond();
-                dismiss();
                 break;
             default:
                 break;
@@ -48,11 +61,27 @@ public class LoginDialogFirstFragment extends BaseDialogFragment implements View
     }
 
     private void goSecond() {
-        if (getActivity() != null) {
-            LoginDialogSecondFragment secondFragment = new LoginDialogSecondFragment();
-            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            secondFragment.show(ft, getTag());
+        if (TextUtils.isEmpty(mBinding.loginUserName.getText())){
+            CommonToast.showShortToast("请输入昵称");
+        }else {
+            if (!mBinding.userSexBoy.isChecked() && !mBinding.userSexGirl.isChecked()) {
+                CommonToast.showShortToast("请选择性别");
+            }else {
+                SpUserInfoUtil.setUserName(mBinding.loginUserName.getText().toString());
+                SpUserInfoUtil.setIsBoy(mBinding.userSexBoy.isChecked());
+                if (getActivity() != null) {
+                    LoginDialogSecondFragment secondFragment = new LoginDialogSecondFragment();
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                    secondFragment.show(ft, getTag());
+                }
+                dismiss();
+            }
         }
+    }
+
+    @Override
+    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+        return keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP;
     }
 }
