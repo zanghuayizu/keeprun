@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.liaodh.keeprun.R;
 import com.example.liaodh.keeprun.databinding.FragmentUserBinding;
+import com.example.liaodh.keeprun.util.SpUserInfoUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 public class UserFragment extends Fragment implements View.OnClickListener {
@@ -41,6 +42,14 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         SimpleDraweeView draweeView = userBinding.userImage;
         Uri uri = Uri.parse("res:///" + R.drawable.timg);
         draweeView.setImageURI(uri);
+        if (SpUserInfoUtil.isUserLogin()){
+            userBinding.userName.setText(SpUserInfoUtil.getUserName());
+            userBinding.userHeight.setText(SpUserInfoUtil.getUserHeight());
+            userBinding.weekTime.setText(SpUserInfoUtil.getWeekTime());
+            userBinding.weekDis.setText(SpUserInfoUtil.getWeekDis());
+            userBinding.allTime.setText(SpUserInfoUtil.getAllTime());
+            userBinding.allDis.setText(SpUserInfoUtil.getAllDis());
+        }
     }
 
     @Override

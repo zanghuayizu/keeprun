@@ -16,8 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginLeft="12dp"
-            android:layout_marginTop="12dp"
             android:layout_marginRight="12dp"
+            android:layout_marginTop="12dp"
             android:background="#FFF">
 
             <com.facebook.drawee.view.SimpleDraweeView
@@ -38,6 +38,18 @@
                 android:textColor="#4BD866"
                 android:textSize="20sp" />
 
+            <Button
+                android:id="@+id/refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="12dp"
+                android:background="#4BD866"
+                android:textSize="18sp"
+                android:textColor="#000"
+                android:text="刷新步数" />
+
 
         </RelativeLayout>
 
@@ -46,8 +58,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
-            android:layout_marginTop="2dp"
             android:layout_marginRight="12dp"
+            android:layout_marginTop="2dp"
             android:background="#FFF">
 
             <com.example.liaodh.keeprun.view.ColorArcProgressBar
@@ -75,8 +87,8 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginLeft="12dp"
-            android:layout_marginTop="0dp"
             android:layout_marginRight="12dp"
+            android:layout_marginTop="0dp"
             android:background="#fff"
             android:orientation="horizontal">
 

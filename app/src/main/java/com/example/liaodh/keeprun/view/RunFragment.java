@@ -35,9 +35,10 @@ public class RunFragment extends Fragment {
     ColorArcProgressBar arcProgressBar;
     private void initBar() {
         arcProgressBar = runBinding.healthBar;
-        runBinding.healthBar.setOnClickListener(new View.OnClickListener() {
+        runBinding.refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                arcProgressBar.setCurrentValues(0);
                 arcProgressBar.setCurrentValues(SpUserInfoUtil.getTodaySteps()-SpUserInfoUtil.getLastMostSteps());
             }
         });
@@ -61,7 +62,7 @@ public class RunFragment extends Fragment {
         public void run() {
             do {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(10*1000);
                     Message message = new Message();
                     message.what = 1;
                     mHandler.sendMessage(message);

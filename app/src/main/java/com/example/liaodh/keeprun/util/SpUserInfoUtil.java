@@ -40,7 +40,7 @@ public class SpUserInfoUtil {
     }
 
     public static String getUserName(){
-        return mSp.getString(USER_NAME,"");
+        return mSp.getString(USER_NAME,"奔跑吧");
     }
 
     private static final String USER_HEIGHT = "user_height";
