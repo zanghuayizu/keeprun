@@ -98,6 +98,7 @@ public class MainFragment extends Fragment {
         }
         mainBinding.currentDayRiqi.setText(current_day_riqi);
         mainBinding.currentDayXingqi.setText("星期" + mWay);
+
     }
 
     private void initViewModel() {

@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import org.litepal.LitePal;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -57,10 +58,40 @@ public class MyApplication extends Application implements SensorEventListener{
     @Override
     public void onSensorChanged(SensorEvent event) {
         mSteps = event.values[0];
+        //只有在日期变化的时候才改变存储的值
+        setCurrentDay(mSteps);
         SpUserInfoUtil.setTodaySteps(mSteps);
     }
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
+    private void setCurrentDay(float steps) {
+        Calendar cal = Calendar.getInstance();
+        String mWay = String.valueOf(cal.get(Calendar.DAY_OF_WEEK));
+        if ("1".equals(mWay)) {
+            mWay = "天";
+        } else if ("2".equals(mWay)) {
+            mWay = "一";
+        } else if ("3".equals(mWay)) {
+            mWay = "二";
+        } else if ("4".equals(mWay)) {
+            mWay = "三";
+        } else if ("5".equals(mWay)) {
+            mWay = "四";
+        } else if ("6".equals(mWay)) {
+            mWay = "五";
+        } else if ("7".equals(mWay)) {
+            mWay = "六";
+        }
+        if (TextUtils.isEmpty(SpUserInfoUtil.getToday())){
+            SpUserInfoUtil.setToday(mWay);
+        }else {
+            if (!SpUserInfoUtil.getToday().equals(mWay)){
+                SpUserInfoUtil.setToday(mWay);
+                SpUserInfoUtil.setLastMostSteps(steps);
+            }
+        }
     }
 }

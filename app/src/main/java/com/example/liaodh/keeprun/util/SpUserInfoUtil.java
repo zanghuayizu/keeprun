@@ -113,16 +113,6 @@ public class SpUserInfoUtil {
         return mSp.getBoolean(IS_BOY,false);
     }
 
-    private static final String USER_TODAY_STEP = "user_today_step";
-
-    public static boolean setTodaySteps(float todaySteps) {
-        return mSp.edit().putFloat(USER_TODAY_STEP,todaySteps).commit();
-    }
-
-    public static float getTodaySteps(){
-        return mSp.getFloat(USER_TODAY_STEP,0);
-    }
-
     private static final String CITY_NAME = "city_name";
 
     public static boolean setCityName(String cityName){
@@ -160,5 +150,47 @@ public class SpUserInfoUtil {
 
     public static String getWeatherToday(){
         return mSp.getString(WEATHER_TODAY,"0");
+    }
+
+
+
+    private static final String TODAY = "today";
+
+    public static boolean setToday(String today){
+        return mSp.edit().putString(TODAY,today).commit();
+    }
+
+    public static String getToday(){
+        return mSp.getString(TODAY,"");
+    }
+
+    private static final String USER_TODAY_STEP = "user_today_step";
+
+    public static boolean setTodaySteps(float todaySteps) {
+        return mSp.edit().putFloat(USER_TODAY_STEP,todaySteps).commit();
+    }
+
+    public static float getTodaySteps(){
+        return mSp.getFloat(USER_TODAY_STEP,0);
+    }
+
+    private static final String LAST_MOST_STEPS = "last_most_steps";
+
+    public static boolean setLastMostSteps(float steps){
+        return mSp.edit().putFloat(LAST_MOST_STEPS,steps).commit();
+    }
+
+    public static float getLastMostSteps(){
+        return mSp.getFloat(LAST_MOST_STEPS,0);
+    }
+
+    private static final String MAX_STEP = "max_step";
+
+    public static float getMaxSteps() {
+        return mSp.getFloat(MAX_STEP,10000);
+    }
+
+    public static boolean setMaxSteps(float steps){
+        return mSp.edit().putFloat(MAX_STEP,steps).commit();
     }
 }

@@ -7,22 +7,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.example.liaodh.keeprun.R;
-import com.example.liaodh.keeprun.util.HttpUtil;
 import com.example.liaodh.keeprun.util.SpUserInfoUtil;
 
-import org.json.JSONObject;
-
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
