@@ -8,14 +8,24 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.liaodh.keeprun.R;
 import com.example.liaodh.keeprun.databinding.FragmentRunBinding;
+import com.example.liaodh.keeprun.util.HttpUtil;
 import com.example.liaodh.keeprun.util.SpUserInfoUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
+
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class RunFragment extends Fragment {
 
@@ -38,6 +48,7 @@ public class RunFragment extends Fragment {
         runBinding.refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                testTomcat();
                 arcProgressBar.setCurrentValues(0);
                 arcProgressBar.setCurrentValues(SpUserInfoUtil.getTodaySteps()-SpUserInfoUtil.getLastMostSteps());
             }
@@ -72,7 +83,27 @@ public class RunFragment extends Fragment {
             }while (true);
         }
     }
+    private void testTomcat(){
+        String url = "http://192.168.137.1:8080/keeprun/Home/LoginServlet";
+        //url = "https://www.baidu.com";
+        HttpUtil.sendOkHttpRequest(url, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("Run",e.toString());
+            }
 
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try {
+                    if (response.code() <= 200) {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
