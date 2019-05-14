@@ -41,7 +41,7 @@
                     android:text="你的昵称 ?"
                     android:textSize="28sp" />
 
-                <com.example.liaodh.keeprun.view.FoxEditTextView
+                <com.example.liaodh.keeprun.view.commod.FoxEditTextView
                     android:id="@+id/login_user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="46dp"
@@ -88,7 +88,7 @@
                         android:textSize="28sp" />
                 </RadioGroup>
 
-                <com.example.liaodh.keeprun.view.FoxTextButton
+                <com.example.liaodh.keeprun.view.commod.FoxTextButton
                     android:id="@+id/login"
                     android:layout_width="132dp"
                     android:layout_height="46dp"

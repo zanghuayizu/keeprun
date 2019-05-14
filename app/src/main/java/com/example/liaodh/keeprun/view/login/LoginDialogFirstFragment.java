@@ -1,4 +1,4 @@
-package com.example.liaodh.keeprun.view;
+package com.example.liaodh.keeprun.view.login;
 
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
@@ -14,16 +14,9 @@ import android.view.ViewGroup;
 
 import com.example.liaodh.keeprun.R;
 import com.example.liaodh.keeprun.databinding.LogindialogFragementFirstBinding;
-import com.example.liaodh.keeprun.util.HttpUtil;
 import com.example.liaodh.keeprun.util.SpUserInfoUtil;
-
-import org.json.JSONObject;
-
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
+import com.example.liaodh.keeprun.view.BaseDialogFragment;
+import com.example.liaodh.keeprun.view.commod.CommonToast;
 
 public class LoginDialogFirstFragment extends BaseDialogFragment implements View.OnClickListener,DialogInterface.OnKeyListener {
 

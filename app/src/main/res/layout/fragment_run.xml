@@ -62,7 +62,7 @@
             android:layout_marginTop="2dp"
             android:background="#FFF">
 
-            <com.example.liaodh.keeprun.view.ColorArcProgressBar
+            <com.example.liaodh.keeprun.view.commod.ColorArcProgressBar
                 android:id="@+id/health_bar"
                 android:layout_width="200dp"
                 android:layout_height="180dp"

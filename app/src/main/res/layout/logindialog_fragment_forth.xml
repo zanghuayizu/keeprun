@@ -42,7 +42,7 @@
                     android:src="@drawable/takephoto" />
 
 
-                <com.example.liaodh.keeprun.view.FoxTextButton
+                <com.example.liaodh.keeprun.view.commod.FoxTextButton
                     android:id="@+id/login"
                     android:layout_width="132dp"
                     android:layout_height="46dp"

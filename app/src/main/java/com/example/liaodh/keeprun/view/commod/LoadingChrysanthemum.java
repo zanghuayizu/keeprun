@@ -1,4 +1,4 @@
-package com.example.liaodh.keeprun.view;
+package com.example.liaodh.keeprun.view.commod;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;

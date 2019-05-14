@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -15,8 +14,7 @@ import android.widget.TextView;
 
 import com.example.liaodh.keeprun.R;
 import com.example.liaodh.keeprun.util.SpUserInfoUtil;
-
-import java.util.Calendar;
+import com.example.liaodh.keeprun.view.login.LoginDialogFirstFragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 

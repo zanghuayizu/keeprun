@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff7df">
+
+        <com.example.liaodh.keeprun.view.commod.FoxImageButton
+            android:id="@+id/iv_btn_back"
+            android:layout_width="45dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/ic_btn_back_personal_center_activity" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="176dp"
+            android:layout_height="36dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_title_personal_center_activity"
+            android:gravity="center"
+            android:letterSpacing="0.24"
+            android:text="身高选择"
+            android:textColor="#fffae7"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <com.example.liaodh.keeprun.view.commod.FoxTextButton
+            android:id="@+id/tv_summit"
+            android:layout_width="45dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_setting_personal_center_activity"
+            android:gravity="center"
+            android:letterSpacing="0.23"
+            android:text="提交"
+            android:textColor="#fffae7"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="23dp"
+            android:text="选择"
+            android:textColor="#80524939"
+            android:textSize="16sp" />
+
+        <com.example.liaodh.keeprun.view.commod.BounceListView
+            android:id="@+id/list_feedback"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tv_des"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp"
+            android:divider="@null"
+            android:scrollbars="none" />
+
+    </RelativeLayout>
+</layout>

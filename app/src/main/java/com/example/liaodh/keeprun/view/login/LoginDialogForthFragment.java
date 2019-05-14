@@ -1,4 +1,4 @@
-package com.example.liaodh.keeprun.view;
+package com.example.liaodh.keeprun.view.login;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,6 +21,9 @@ import android.view.ViewGroup;
 import com.example.liaodh.keeprun.R;
 import com.example.liaodh.keeprun.databinding.LogindialogFragmentForthBinding;
 import com.example.liaodh.keeprun.util.SpUserInfoUtil;
+import com.example.liaodh.keeprun.view.BaseDialogFragment;
+import com.example.liaodh.keeprun.view.MainActivity;
+import com.example.liaodh.keeprun.view.commod.CommonToast;
 
 import java.io.File;
 import java.io.FileNotFoundException;

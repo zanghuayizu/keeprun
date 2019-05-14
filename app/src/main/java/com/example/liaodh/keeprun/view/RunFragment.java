@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +16,7 @@ import com.example.liaodh.keeprun.R;
 import com.example.liaodh.keeprun.databinding.FragmentRunBinding;
 import com.example.liaodh.keeprun.util.HttpUtil;
 import com.example.liaodh.keeprun.util.SpUserInfoUtil;
+import com.example.liaodh.keeprun.view.commod.ColorArcProgressBar;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.json.JSONObject;

@@ -1,4 +1,4 @@
-package com.example.liaodh.keeprun.view;
+package com.example.liaodh.keeprun.view.login;
 
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import com.example.liaodh.keeprun.R;
 import com.example.liaodh.keeprun.databinding.LogindialogFragmentSecondBinding;
 import com.example.liaodh.keeprun.util.SpUserInfoUtil;
+import com.example.liaodh.keeprun.view.BaseDialogFragment;
+import com.example.liaodh.keeprun.view.commod.CommonToast;
 
 public class LoginDialogSecondFragment extends BaseDialogFragment
         implements View.OnClickListener ,DialogInterface.OnKeyListener{
@@ -37,6 +39,8 @@ public class LoginDialogSecondFragment extends BaseDialogFragment
 
     private void initListener() {
         mBinding.login.setOnClickListener(this);
+        mBinding.userHeight.setOnClickListener(this);
+        mBinding.userWeight.setOnClickListener(this);
         getDialog().setOnKeyListener(this);
     }
 
@@ -46,8 +50,33 @@ public class LoginDialogSecondFragment extends BaseDialogFragment
             case R.id.login:
                 goThird();
                 break;
+            case R.id.user_height:
+                goSelect(1);
+                break;
+            case R.id.user_weight:
+                goSelect(2);
+                break;
             default:
                 break;
+        }
+    }
+
+    private void goSelect(final int i) {
+        if (getActivity() != null) {
+            SelectHeightWeightDialogFragment fragment = new SelectHeightWeightDialogFragment();
+            fragment.setSelectListener(i,new setSelect() {
+                @Override
+                public void setSelect(int current) {
+                    if (i == 1){
+                        mBinding.userHeight.setText(String.valueOf(current+100));
+                    }else if (i == 2){
+                        mBinding.userWeight.setText(String.valueOf(current+30));
+                    }
+                }
+            });
+            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            fragment.show(ft, getTag());
         }
     }
 
@@ -70,5 +99,9 @@ public class LoginDialogSecondFragment extends BaseDialogFragment
     @Override
     public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
         return keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP;
+    }
+
+    public interface setSelect{
+        void setSelect(int current);
     }
 }
