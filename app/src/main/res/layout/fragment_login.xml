@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <RelativeLayout
+            android:layout_width="395.5dp"
+            android:layout_height="329dp">
+
+
+            <LinearLayout
+                android:layout_width="356dp"
+                android:layout_height="324dp"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_dialog_fragment_login_netease_email"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="28dp"
+                    android:text="账户密码登录"
+                    android:textColor="#524939"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="47dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="57.5dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="51dp"
+                        android:text="账户："
+                        android:textColor="#a09b92"
+                        android:textSize="16sp" />
+
+                    <com.example.liaodh.keeprun.view.commod.FoxEditTextView
+                        android:id="@+id/user_account"
+                        android:layout_width="196dp"
+                        android:layout_height="46dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/bg_shape_fox_edit_text"
+                        android:imeOptions="flagNoExtractUi"
+                        android:hint="请输入数字和字母"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:singleLine="true" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="57.5dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="51dp"
+                        android:text="密码:"
+                        android:textColor="#a09b92"
+                        android:textSize="16sp" />
+
+                    <com.example.liaodh.keeprun.view.commod.FoxEditTextView
+                        android:id="@+id/password"
+                        android:layout_width="196dp"
+                        android:layout_height="46dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/bg_shape_fox_edit_text"
+                        android:imeOptions="flagNoExtractUi"
+                        android:inputType="textPassword"
+                        android:hint="请输入数字和字母"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:singleLine="true" />
+
+                </LinearLayout>
+
+                <com.example.liaodh.keeprun.view.commod.FoxTextButton
+                    android:id="@+id/login"
+                    android:layout_width="132dp"
+                    android:layout_height="46dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="28dp"
+                    android:background="@drawable/send_verify"
+                    android:gravity="center"
+                    android:text="登录"
+                    android:textColor="#777777"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</layout>

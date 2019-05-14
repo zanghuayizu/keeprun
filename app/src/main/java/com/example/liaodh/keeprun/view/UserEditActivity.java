@@ -1,5 +1,6 @@
 package com.example.liaodh.keeprun.view;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -57,6 +58,10 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
                 SpUserInfoUtil.setIsBoy(mBinding.userSexBoy.isChecked());
                 SpUserInfoUtil.setUserHeight(mBinding.userHeight.getText().toString());
                 SpUserInfoUtil.setUserWeight(mBinding.userWeight.getText().toString());
+                Intent intent = new Intent(this,MainActivity.class);
+                long id = 2;
+                intent.putExtra("tag",id);
+                startActivity(intent);
                 finish();
                 break;
         }

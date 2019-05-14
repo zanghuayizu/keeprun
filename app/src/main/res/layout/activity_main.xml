@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,48 +7,49 @@
     <RelativeLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"
-        android:layout_marginBottom="55dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="55dp">
+
     </RelativeLayout>
 
     <!-- 底部按钮 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
         android:background="#36648B"
         android:gravity="center"
-        android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/main"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
-            android:textSize="@dimen/activity_bottom_textsize"
             android:text="首页"
-            android:textColor="#ffffff"/>
+            android:textColor="#ffffff"
+            android:textSize="@dimen/activity_bottom_textsize" />
 
         <TextView
             android:id="@+id/run"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
-            android:textSize="@dimen/activity_bottom_textsize"
             android:text="跑步"
-            android:textColor="#605e5e"/>
+            android:textColor="#605e5e"
+            android:textSize="@dimen/activity_bottom_textsize" />
 
         <TextView
             android:id="@+id/user"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
-            android:textSize="@dimen/activity_bottom_textsize"
             android:text="我的"
-            android:textColor="#605e5e"/>
+            android:textColor="#605e5e"
+            android:textSize="@dimen/activity_bottom_textsize" />
     </LinearLayout>
 
 </RelativeLayout>

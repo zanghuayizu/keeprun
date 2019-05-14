@@ -45,6 +45,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         if (SpUserInfoUtil.isUserLogin()){
             userBinding.userName.setText(SpUserInfoUtil.getUserName());
             userBinding.userHeight.setText(SpUserInfoUtil.getUserHeight());
+            userBinding.userWeight.setText(SpUserInfoUtil.getUserWeight());
             userBinding.weekTime.setText(SpUserInfoUtil.getWeekTime());
             userBinding.weekDis.setText(SpUserInfoUtil.getWeekDis());
             userBinding.allTime.setText(SpUserInfoUtil.getAllTime());
@@ -57,8 +58,11 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.icon_in:
                 //设置用户信息页面
-                Intent intent = new Intent(getActivity(),UserEditActivity.class);
-                startActivity(intent);
+                if (getActivity() != null){
+                    Intent intent = new Intent(getActivity(),UserEditActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
                 break;
             default:
                 break;

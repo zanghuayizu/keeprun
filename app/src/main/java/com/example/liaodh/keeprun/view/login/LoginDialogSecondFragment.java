@@ -85,7 +85,7 @@ public class LoginDialogSecondFragment extends BaseDialogFragment
             CommonToast.showShortToast("请输入身高或者体重");
         }else {
             SpUserInfoUtil.setUserHeight(mBinding.userHeight.getText().toString());
-            SpUserInfoUtil.setUserHeight(mBinding.userWeight.getText().toString());
+            SpUserInfoUtil.setUserWeight(mBinding.userWeight.getText().toString());
             if (getActivity() != null) {
                 LoginDialogThirdFragment thirdFragment = new LoginDialogThirdFragment();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
