@@ -193,4 +193,31 @@ public class SpUserInfoUtil {
     public static boolean setMaxSteps(float steps){
         return mSp.edit().putFloat(MAX_STEP,steps).commit();
     }
+
+    private static final  String LOCATION_LAT = "location_lat";
+    public static boolean setLat(String lat) {
+        return mSp.edit().putString(LOCATION_LAT,lat).commit();
+    }
+
+    public static String getLat(){
+        return mSp.getString(LOCATION_LAT,"");
+    }
+
+    private static final  String LOCATION_LNG = "location_lng";
+    public static boolean setLng(String lng) {
+        return mSp.edit().putString(LOCATION_LNG,lng).commit();
+    }
+
+    public static String getLng(){
+        return mSp.getString(LOCATION_LNG,"");
+    }
+
+    private static final String RUN_DIS = "rundis";
+    public static boolean setRunDis(float runDis) {
+        return mSp.edit().putFloat(RUN_DIS,runDis).commit();
+    }
+
+    public static float getRunDis(){
+        return mSp.getFloat(RUN_DIS,0);
+    }
 }

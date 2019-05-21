@@ -1,5 +1,6 @@
 package com.example.liaodh.keeprun.view;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
@@ -39,9 +40,21 @@ public class RunFragment extends Fragment {
     private View initView(LayoutInflater inflater, ViewGroup container) {
         runBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_run, container, false);
         initBar();
+        initListener();
         return runBinding.getRoot();
 
     }
+
+    private void initListener() {
+        runBinding.startRunImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),RunningManAvtivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
     ColorArcProgressBar arcProgressBar;
     private void initBar() {
         arcProgressBar = runBinding.healthBar;

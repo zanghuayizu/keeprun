@@ -7,23 +7,14 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.text.TextUtils;
-import android.util.Log;
 
-import com.example.liaodh.keeprun.util.AssetsUtil;
-import com.example.liaodh.keeprun.util.HttpUtil;
 import com.example.liaodh.keeprun.util.LocationUtil;
 import com.example.liaodh.keeprun.util.SpUserInfoUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
 
-import org.json.JSONObject;
 import org.litepal.LitePal;
 
-import java.io.IOException;
 import java.util.Calendar;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 import static org.litepal.LitePalApplication.getContext;
 
@@ -40,6 +31,11 @@ public class MyApplication extends Application implements SensorEventListener{
         LitePal.initialize(this);
         mInstance = this;
         startMyServiceCountStep();
+        startQueryLocation();
+    }
+
+    private void startQueryLocation() {
+        LocationUtil.getCNBylocation(getContext());
     }
 
     private SensorManager sensorManager;
