@@ -11,8 +11,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -24,8 +26,15 @@ import android.widget.MediaController;
 import com.example.liaodh.keeprun.R;
 import com.example.liaodh.keeprun.databinding.RunningmanBinding;
 import com.example.liaodh.keeprun.util.SpUserInfoUtil;
+import com.example.liaodh.keeprun.view.commod.CommonToast;
 
-public class RunningManAvtivity extends AppCompatActivity implements SensorEventListener {
+import java.util.Timer;
+import java.util.TimerTask;
+
+import bolts.Task;
+
+public class RunningManAvtivity extends AppCompatActivity implements SensorEventListener,
+        View.OnClickListener,View.OnKeyListener ,View.OnLongClickListener{
 
     private RunningmanBinding mBinding;
     double lastLat;
@@ -39,11 +48,10 @@ public class RunningManAvtivity extends AppCompatActivity implements SensorEvent
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            super.handleMessage(msg);
             switch (msg.what) {
                 case 1:
                     long sysTime = System.currentTimeMillis();//获取系统时间
-                    CharSequence sysTimeStr = DateFormat.format("mm:ss", sysTime - startTime);//时间显示格式
+                    CharSequence sysTimeStr = DateFormat.format("mm:ss", sysTime - startTime - (reStartTime-pouseTime));//时间显示格式
                     mBinding.runTime.setText(sysTimeStr); //更新时间
                     mBinding.weidu.setText("纬度 " + SpUserInfoUtil.getLat().substring(0, 7));
                     mBinding.jingdu.setText("经度" + SpUserInfoUtil.getLng().substring(0, 8));
@@ -65,6 +73,7 @@ public class RunningManAvtivity extends AppCompatActivity implements SensorEvent
             }
         }
     };
+
     private long startTime;
 
 
@@ -111,24 +120,50 @@ public class RunningManAvtivity extends AppCompatActivity implements SensorEvent
     }
 
     private void startRun() {
+        initListener();
         startTime = System.currentTimeMillis();//获取系统时间
-        new TimeThread().start();
+        run();
     }
 
-    class TimeThread extends Thread {
-        @Override
-        public void run() {
-            do {
-                try {
-                    Message msg = new Message();
-                    msg.what = 1;  //消息(一个整型值)
-                    mHandler.sendMessage(msg);// 每隔1秒发送一个msg给mHandler
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+    private void initListener() {
+        mBinding.start.setOnClickListener(this);
+        mBinding.pouse.setOnClickListener(this);
+        mBinding.stop.setOnClickListener(this);
+        mBinding.stop.setOnLongClickListener(this);
+    }
+
+
+    long pouseTime;
+    long reStartTime;
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.start:
+                if (task != null){
+                    task =null;
+                    task = new MyTimerTask();
+                    timer.schedule(task,0,1000);
                 }
-            } while (true);
+                reStartTime = System.currentTimeMillis();
+                mBinding.stop.setVisibility(View.GONE);
+                mBinding.start.setVisibility(View.GONE);
+                mBinding.pouse.setVisibility(View.VISIBLE);
+                break;
+            case R.id.stop:
+                CommonToast.showShortToast("长按退出");
+                break;
+            case R.id.pouse:
+                task.cancel();
+                pouseTime = System.currentTimeMillis();
+                mBinding.stop.setVisibility(View.VISIBLE);
+                mBinding.start.setVisibility(View.VISIBLE);
+                mBinding.pouse.setVisibility(View.GONE);
+                break;
         }
+    }
+
+    private void save() {
+        //保存数据
     }
 
     private static final double EARTH_RADIUS = 6378137.0;
@@ -171,13 +206,13 @@ public class RunningManAvtivity extends AppCompatActivity implements SensorEvent
     protected void onStop(){
         mSensorManager.unregisterListener(this);
         super.onStop();
-
     }
 
     //传感器值改变
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
+
     //精度改变
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -196,6 +231,40 @@ public class RunningManAvtivity extends AppCompatActivity implements SensorEvent
                 currentDegree = -degree;
                 break;
 
+        }
+    }
+
+    TimerTask task;
+    Timer timer;
+    private void run(){
+        timer = new Timer();
+        task = new MyTimerTask();
+        timer.schedule(task,0, 1000);
+    }
+
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        return keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP;
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        switch (v.getId()){
+            case R.id.stop:
+                task.cancel();
+                finish();
+                save();
+                break;
+        }
+        return true;
+    }
+
+    class MyTimerTask extends TimerTask{
+        @Override
+        public void run() {
+            Message msg = new Message();
+            msg.what = 1;  //消息(一个整型值)
+            mHandler.sendMessage(msg);// 每隔1秒发送一个msg给mHandler
         }
     }
 }
