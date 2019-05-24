@@ -68,8 +68,8 @@ public class MainFragment extends Fragment {
     }
 
     private void initLocation() {
-        mainBinding.currentWhere.setText(SpUserInfoUtil.getSubCityName());
-        mainBinding.currentDayWeather.setText(SpUserInfoUtil.getWeatherToday());
+        mainBinding.userLocation.setText(SpUserInfoUtil.getSubCityName());
+        mainBinding.wendu.setText(SpUserInfoUtil.getWeatherToday());
     }
 
     private void initTime() {
@@ -161,7 +161,7 @@ public class MainFragment extends Fragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                mainBinding.currentDayWeather.setText(wendu);
+                                mainBinding.wendu.setText(wendu);
                             }
                         });
                     }
