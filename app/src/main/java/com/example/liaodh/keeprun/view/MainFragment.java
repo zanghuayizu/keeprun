@@ -3,6 +3,10 @@ package com.example.liaodh.keeprun.view;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -28,11 +32,14 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
 import java.util.TimeZone;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+
+import static android.content.Context.SENSOR_SERVICE;
 
 /**
  * 首页
@@ -55,7 +62,106 @@ public class MainFragment extends Fragment {
         mainBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false);
         this.context = getContext();
         initViewData();
+        initSensor();
         return mainBinding.getRoot();
+    }
+
+    SensorManager sensorManager;
+    Sensor shiduSensor;
+    Sensor guangSensor;
+    Sensor mYaQiangSensor;
+
+    ShiduListner shiduListner;
+    GuangListner mGuangListner;
+    YaQiangListner mYaQiangListner;
+
+    private void initSensor() {
+        sensorManager = (SensorManager) getActivity().getSystemService(SENSOR_SERVICE);
+        List<Sensor> list=sensorManager.getSensorList(Sensor.TYPE_ALL);
+        Log.e("MainSensor","您的手机有"+list.size()+"个传感器");
+        for(Sensor sen:list) {
+            String msg = "类型:" + sen.getType() + "名字:" + sen.getName() + "版本:" + sen.getVersion() +
+                    "供应商:" + sen.getVendor() + "\n";
+            Log.e("MainSensor",msg);
+        }
+
+
+
+
+
+
+
+
+
+
+
+        shiduSensor = sensorManager.getDefaultSensor(Sensor.TYPE_RELATIVE_HUMIDITY);
+        if (shiduSensor == null){
+            mainBinding.shidu.setText("不支持获取");
+        }
+        shiduListner = new ShiduListner();
+        sensorManager.registerListener(shiduListner,shiduSensor,SensorManager.SENSOR_DELAY_NORMAL);
+
+        guangSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+        if (guangSensor == null){
+            mainBinding.guang.setText("不支持获取");
+        }
+        mGuangListner = new GuangListner();
+        sensorManager.registerListener(mGuangListner,guangSensor,SensorManager.SENSOR_DELAY_NORMAL);
+
+        mYaQiangSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
+        if(mYaQiangSensor == null){
+            mainBinding.pa.setText("不支持获取");
+        }
+        mYaQiangListner = new YaQiangListner();
+        sensorManager.registerListener(mYaQiangListner,mYaQiangSensor,SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    class ShiduListner implements SensorEventListener{
+
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            mainBinding.shidu.setText(String.valueOf(event.values[0]));
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+        }
+    }
+
+    class YaQiangListner implements SensorEventListener{
+
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            mainBinding.pa.setText(String.valueOf(event.values[0]));
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+        }
+    }
+
+    class GuangListner implements SensorEventListener{
+
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            mainBinding.guang.setText(String.valueOf(event.values[0]));
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        sensorManager.unregisterListener(mGuangListner);
+        sensorManager.unregisterListener(mYaQiangListner);
+        sensorManager.unregisterListener(shiduListner);
     }
 
     private void initViewData() {
@@ -68,7 +174,7 @@ public class MainFragment extends Fragment {
     }
 
     private void initLocation() {
-        mainBinding.userLocation.setText(SpUserInfoUtil.getSubCityName());
+        mainBinding.userLocation.setText(SpUserInfoUtil.getCityName());
         mainBinding.wendu.setText(SpUserInfoUtil.getWeatherToday());
     }
 
@@ -182,6 +288,8 @@ public class MainFragment extends Fragment {
                     long sysTime = System.currentTimeMillis();//获取系统时间
                     CharSequence sysTimeStr = DateFormat.format("hh:mm", sysTime);//时间显示格式
                     mainBinding.currentTime.setText(sysTimeStr); //更新时间
+                    mainBinding.userLocationWeidu.setText(SpUserInfoUtil.getLat());
+                    mainBinding.userLocationJingdu.setText(SpUserInfoUtil.getLng());
                     break;
                 case 2:
                     getWeatherInfo();
