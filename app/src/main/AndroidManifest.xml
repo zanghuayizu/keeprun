@@ -30,6 +30,8 @@
         <activity android:name=".view.MainActivity$MyFragmentActivity" />
         <activity android:name=".view.UserEditActivity" />
         <activity android:name=".view.RunningManAvtivity" />
+        <activity android:name=".view.commod.ReviewDataActivity" />
+        <activity android:name=".view.TodayMsgActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

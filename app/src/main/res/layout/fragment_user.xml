@@ -141,6 +141,15 @@
                 android:text="我的运动数据"
                 android:textSize="20sp" />
 
+            <ImageView
+                android:id="@+id/review_data_in"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_marginRight="15dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ja_detaildisclosure" />
+
         </RelativeLayout>
 
         <RelativeLayout

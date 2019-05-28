@@ -134,4 +134,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //获取用户基本信息
+
+        //获取用户运动信息
+    }
 }

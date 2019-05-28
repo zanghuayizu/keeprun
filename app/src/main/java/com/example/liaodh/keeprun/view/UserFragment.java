@@ -13,8 +13,21 @@ import android.view.ViewGroup;
 
 import com.example.liaodh.keeprun.R;
 import com.example.liaodh.keeprun.databinding.FragmentUserBinding;
+import com.example.liaodh.keeprun.util.HttpUtil;
 import com.example.liaodh.keeprun.util.SpUserInfoUtil;
+import com.example.liaodh.keeprun.view.commod.CommonToast;
+import com.example.liaodh.keeprun.view.commod.ReviewDataActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.HttpCookie;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class UserFragment extends Fragment implements View.OnClickListener {
 
@@ -29,13 +42,13 @@ public class UserFragment extends Fragment implements View.OnClickListener {
 
     private View initView(LayoutInflater inflater, ViewGroup container) {
         userBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_user, container, false);
-        initViewData();
         initListener();
         return userBinding.getRoot();
     }
 
     private void initListener() {
         userBinding.iconIn.setOnClickListener(this);
+        userBinding.reviewDataIn.setOnClickListener(this);
     }
 
     private void initViewData() {
@@ -43,6 +56,31 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         Uri uri = Uri.parse("res:///" + R.drawable.timg);
         draweeView.setImageURI(uri);
         if (SpUserInfoUtil.isUserLogin()){
+            String url = HttpUtil.baseUrl + "getUserInfo?" +"userId=" + "1";
+            HttpUtil.getUserInfo(url, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            CommonToast.showShortToast("失败");
+                        }
+                    });
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    if (response.isSuccessful()){
+                        try {
+                            JSONObject jsonObject = new JSONObject(response.body().string());
+                            String userName = jsonObject.optString("userName");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+
+                        }
+                    }
+                }
+            });
             userBinding.userName.setText(SpUserInfoUtil.getUserName());
             userBinding.userHeight.setText(SpUserInfoUtil.getUserHeight());
             userBinding.userWeight.setText(SpUserInfoUtil.getUserWeight());
@@ -61,11 +99,22 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 if (getActivity() != null){
                     Intent intent = new Intent(getActivity(),UserEditActivity.class);
                     startActivity(intent);
-                    getActivity().finish();
+                }
+                break;
+            case R.id.review_data_in:
+                if (getActivity() != null){
+                    Intent intent = new Intent(getActivity(),ReviewDataActivity.class);
+                    startActivity(intent);
                 }
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initViewData();
     }
 }

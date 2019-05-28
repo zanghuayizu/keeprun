@@ -73,7 +73,7 @@ public class RunFragment extends Fragment {
         runBinding.healthBarMaxnum.setText(String.valueOf(SpUserInfoUtil.getMaxSteps()));
 
         SimpleDraweeView draweeView = runBinding.userRunImage;
-        Uri uri = Uri.parse("res:///" + R.drawable.timg);
+        Uri uri = Uri.parse("res:///" + R.drawable.runningman);
         draweeView.setImageURI(uri);
 
         draweeView = runBinding.startRunImage;

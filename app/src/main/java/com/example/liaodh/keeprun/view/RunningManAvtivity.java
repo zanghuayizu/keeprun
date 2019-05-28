@@ -1,5 +1,6 @@
 package com.example.liaodh.keeprun.view;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -23,13 +24,14 @@ import android.widget.MediaController;
 
 import com.example.liaodh.keeprun.R;
 import com.example.liaodh.keeprun.databinding.RunningmanBinding;
+import com.example.liaodh.keeprun.util.SpUserInfoUtil;
 import com.example.liaodh.keeprun.view.commod.CommonToast;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class RunningManAvtivity extends AppCompatActivity implements SensorEventListener,
-        View.OnClickListener, View.OnKeyListener, View.OnLongClickListener {
+        View.OnClickListener, View.OnLongClickListener {
 
     private RunningmanBinding mBinding;
     TimerTask task;
@@ -123,7 +125,7 @@ public class RunningManAvtivity extends AppCompatActivity implements SensorEvent
                 break;
             case R.id.stop:
                 task.cancel();
-                CommonToast.showShortToast("长按退出");
+                CommonToast.showShortToast("长按结束");
                 break;
             case R.id.pouse:
                 task.cancel();
@@ -137,6 +139,11 @@ public class RunningManAvtivity extends AppCompatActivity implements SensorEvent
 
     private void save() {
         //保存数据
+        SpUserInfoUtil.setStepNum(mBinding.steps.getText().toString());
+        SpUserInfoUtil.setRunDis(Float.valueOf(mBinding.runDis.getText().toString()));
+        SpUserInfoUtil.setTimes(mBinding.runTime.getText().toString());
+        SpUserInfoUtil.setKaluli(mBinding.kaluli.getText().toString());
+
     }
 
     @Override
@@ -200,8 +207,10 @@ public class RunningManAvtivity extends AppCompatActivity implements SensorEvent
         switch (v.getId()) {
             case R.id.stop:
                 task.cancel();
-                finish();
+                mBinding.start.setVisibility(View.INVISIBLE);
                 save();
+                Intent intent = new Intent(this, TodayMsgActivity.class);
+                startActivity(intent);
                 break;
         }
         return true;
@@ -228,10 +237,17 @@ public class RunningManAvtivity extends AppCompatActivity implements SensorEvent
         mBinding.runTime.setText(sysTimeStr); //更新时间
     }
 
-    @Override
-    public boolean onKey(View v, int keyCode, KeyEvent event) {
-        return keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP;
-    }
+    long firstTime = 0;
 
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() - firstTime > 2000) {
+            CommonToast.showShortToast("双击返回主界面");
+            firstTime = System.currentTimeMillis();
+        } else {
+            finish();
+        }
+
+    }
 }
 

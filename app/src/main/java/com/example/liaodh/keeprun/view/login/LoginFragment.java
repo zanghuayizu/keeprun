@@ -1,6 +1,7 @@
 package com.example.liaodh.keeprun.view.login;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,7 +16,9 @@ import android.view.ViewGroup;
 import com.example.liaodh.keeprun.R;
 import com.example.liaodh.keeprun.databinding.FragmentLoginBinding;
 import com.example.liaodh.keeprun.util.HttpUtil;
+import com.example.liaodh.keeprun.util.SpUserInfoUtil;
 import com.example.liaodh.keeprun.view.BaseDialogFragment;
+import com.example.liaodh.keeprun.view.MainActivity;
 import com.example.liaodh.keeprun.view.commod.CommonToast;
 
 import org.json.JSONException;
@@ -77,8 +80,7 @@ public class LoginFragment extends BaseDialogFragment
                     //202：用户存在，账户密码正确
                     //203：用户存在，账户密码错误
                     //302：账户不存在，注册成功，然后完善账户信息
-                    //login(mBinding.userAccount.getText().toString(), mBinding.password.getText().toString());
-                    registor();
+                    login(mBinding.userAccount.getText().toString(), mBinding.password.getText().toString());
                 }
             }
         }
@@ -93,15 +95,17 @@ public class LoginFragment extends BaseDialogFragment
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, Response response) {
                 if (response.isSuccessful()) {
                     //服务器的返回值
                     try {
-                        JSONObject jsonObject = new JSONObject(response.body().toString());
+                        JSONObject jsonObject = new JSONObject(response.body().string());
                         int code = jsonObject.optInt("resCode");
+                        //将userid存在本地
                         switch (code) {
-                            case 302:
+                            case 204:
                                 //注册，完善账户信息
+                                SpUserInfoUtil.setUserId(jsonObject.optString("userId"));
                                 registor();
                                 break;
                             case 202:
@@ -109,11 +113,16 @@ public class LoginFragment extends BaseDialogFragment
                                 loginSecceed();
                                 break;
                             case 203:
-                                CommonToast.showShortToast("密码错误");
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        CommonToast.showShortToast("密码错误");
+                                    }
+                                });
                                 break;
                         }
 
-                    } catch (JSONException e) {
+                    } catch (JSONException | IOException e) {
                         e.printStackTrace();
                     }
                 }
@@ -122,8 +131,18 @@ public class LoginFragment extends BaseDialogFragment
     }
 
     private void loginSecceed() {
-        CommonToast.showShortToast("登录成功");
-        dismiss();
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                CommonToast.showShortToast("登录成功");
+                if (getActivity() != null){
+                    Intent intent = new Intent(getContext(),MainActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+                dismiss();
+            }
+        });
     }
 
     private void registor() {

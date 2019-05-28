@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#eee"
+            android:padding="12dp"
+            android:gravity="center|left"
+            android:text="请在下方对自己本次得运动进行评价，请手写0-9的数字，0代表非常不满意，9代表非常满意"
+            android:textSize="22sp" />
+
+        <com.example.liaodh.keeprun.view.commod.PaintView
+            android:id="@+id/paint_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/text" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+            android:background="#ddd">
+
+            <com.example.liaodh.keeprun.view.commod.FoxTextButton
+                android:id="@+id/back"
+                android:layout_width="100dp"
+                android:layout_height="56dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/send_verify"
+                android:gravity="center"
+                android:text="返回"
+                android:textSize="18sp" />
+
+            <com.example.liaodh.keeprun.view.commod.FoxTextButton
+                android:id="@+id/refresh_edit"
+                android:layout_width="100dp"
+                android:layout_height="56dp"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/send_verify"
+                android:gravity="center"
+                android:text="重写"
+                android:textSize="18sp" />
+
+            <com.example.liaodh.keeprun.view.commod.FoxTextButton
+                android:id="@+id/save"
+                android:layout_width="100dp"
+                android:layout_height="56dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/send_verify"
+                android:gravity="center"
+                android:text="保存"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</layout>

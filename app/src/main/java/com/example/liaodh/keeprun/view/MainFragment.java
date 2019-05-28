@@ -13,7 +13,6 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,11 +21,8 @@ import android.view.ViewGroup;
 
 import com.example.liaodh.keeprun.R;
 import com.example.liaodh.keeprun.databinding.FragmentMainBinding;
-import com.example.liaodh.keeprun.util.AssetsUtil;
 import com.example.liaodh.keeprun.util.HttpUtil;
-import com.example.liaodh.keeprun.util.LocationUtil;
 import com.example.liaodh.keeprun.util.SpUserInfoUtil;
-import com.example.liaodh.keeprun.viewmodel.MsgViewModel;
 
 import org.json.JSONObject;
 
@@ -46,7 +42,6 @@ import static android.content.Context.SENSOR_SERVICE;
  */
 public class MainFragment extends Fragment {
     private FragmentMainBinding mainBinding;
-    MsgViewModel msgViewModel;
     private Context context;
 
     @Nullable
@@ -54,7 +49,6 @@ public class MainFragment extends Fragment {
     // 创建该Fragment的视图
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        initViewModel();
         return initView(inflater, container);
     }
 
@@ -207,9 +201,7 @@ public class MainFragment extends Fragment {
 
     }
 
-    private void initViewModel() {
-        msgViewModel = ViewModelProviders.of(this).get(MsgViewModel.class);
-    }
+
 
     @Override
     // 当Activity的onCreate方法返回时调用

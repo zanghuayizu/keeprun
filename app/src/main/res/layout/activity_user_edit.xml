@@ -90,14 +90,18 @@
                 android:text="昵称"
                 android:textSize="25sp" />
 
-            <EditText
+            <com.example.liaodh.keeprun.view.commod.FoxEditTextView
                 android:id="@+id/user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="22dp"
-                android:text="default"
+                android:imeOptions="flagNoExtractUi"
+                android:maxLength="8"
+                android:background="@drawable/bg_shape_fox_edit_text"
+                android:minWidth="112dp"
+                android:gravity="center"
                 android:textSize="25sp" />
         </RelativeLayout>
 
@@ -153,14 +157,16 @@
                 android:text="身高"
                 android:textSize="25sp" />
 
-            <EditText
+            <com.example.liaodh.keeprun.view.commod.FoxTextButton
                 android:id="@+id/user_height"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="22dp"
-                android:text="0"
+                android:background="@drawable/bg_shape_fox_edit_text"
+                android:gravity="center"
+                android:minWidth="112dp"
                 android:textSize="25sp" />
         </RelativeLayout>
 
@@ -178,14 +184,73 @@
                 android:text="体重"
                 android:textSize="25sp" />
 
-            <EditText
+            <com.example.liaodh.keeprun.view.commod.FoxTextButton
                 android:id="@+id/user_weight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="22dp"
-                android:text="0"
+                android:background="@drawable/bg_shape_fox_edit_text"
+                android:gravity="center"
+                android:minWidth="112dp"
+                android:textSize="25sp" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="2dp"
+            android:background="#eee">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="22dp"
+                android:text="目标步数"
+                android:textSize="25sp" />
+
+            <com.example.liaodh.keeprun.view.commod.FoxTextButton
+                android:id="@+id/user_step_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="22dp"
+                android:background="@drawable/bg_shape_fox_edit_text"
+                android:gravity="center"
+                android:inputType="number"
+                android:minWidth="112dp"
+                android:textSize="25sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="2dp"
+            android:background="#eee">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="22dp"
+                android:text="步长"
+                android:textSize="25sp" />
+
+            <com.example.liaodh.keeprun.view.commod.FoxTextButton
+                android:id="@+id/user_step_long"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="22dp"
+                android:background="@drawable/bg_shape_fox_edit_text"
+                android:gravity="center"
+                android:inputType="number"
+                android:minWidth="112dp"
                 android:textSize="25sp" />
         </RelativeLayout>
 

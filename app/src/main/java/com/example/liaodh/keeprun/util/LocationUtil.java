@@ -15,6 +15,8 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 
+import com.example.liaodh.keeprun.view.commod.CommonToast;
+
 public class LocationUtil {
     public static String cityName;   //城市名
     private static Geocoder geocoder;  //此对象能通过经纬度来获取相应的城市等信息
@@ -59,7 +61,11 @@ public class LocationUtil {
 		第二个参数表示更新的周期，单位为毫秒，
 		第三个参数的含义表示最小距离间隔，单位是米，设定每30秒进行一次自动定位
 		*/
-            locationManager.requestLocationUpdates(provider, 1000, 0, locationListener);
+            locationManager.requestLocationUpdates(provider, 30000, 50, locationListener);
+            //移除监听器，在只有一个widget的时候，这个还是适用的
+            locationManager.removeUpdates(locationListener);
+        }else {
+            CommonToast.showLongToast("请打开定位服务");
         }
         return cityName;
     }

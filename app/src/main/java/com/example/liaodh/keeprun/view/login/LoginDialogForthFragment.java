@@ -20,7 +20,6 @@ import android.view.ViewGroup;
 
 import com.example.liaodh.keeprun.R;
 import com.example.liaodh.keeprun.databinding.LogindialogFragmentForthBinding;
-import com.example.liaodh.keeprun.util.HttpUtil;
 import com.example.liaodh.keeprun.util.SpUserInfoUtil;
 import com.example.liaodh.keeprun.view.BaseDialogFragment;
 import com.example.liaodh.keeprun.view.MainActivity;
@@ -38,6 +37,7 @@ public class LoginDialogForthFragment extends BaseDialogFragment implements OnCl
     private Uri imageUri;
     private static final int TAKE_PHOTO = 1;
     private File outputImage;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -79,21 +79,19 @@ public class LoginDialogForthFragment extends BaseDialogFragment implements OnCl
         if (!outputImage.exists()){
             CommonToast.showShortToast("请先拍照");
         }else {
-            if (getActivity() != null){
-                Intent intent = new Intent(getContext(),MainActivity.class);
-                startActivity(intent);
-                getActivity().finish();
-            }
-            SpUserInfoUtil.setUserIsLogin(true);
             //将数据传到服务器
             saveUserInfo();
-            dismiss();
         }
     }
 
     private void saveUserInfo() {
-        //回学校完成这部分
-        String url = HttpUtil.baseUrl + "";
+        if (getActivity() != null){
+            Intent intent = new Intent(getContext(),MainActivity.class);
+            startActivity(intent);
+            getActivity().finish();
+        }
+        SpUserInfoUtil.setUserIsLogin(true);
+        dismiss();
     }
 
     private void takePhoto() {

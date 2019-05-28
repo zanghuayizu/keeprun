@@ -98,7 +98,17 @@ public class LoginDialogSecondFragment extends BaseDialogFragment
 
     @Override
     public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-        return keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP;
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP){
+            if (getActivity() != null) {
+                LoginFragment loginFragment = new LoginFragment();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                loginFragment.show(ft, getTag());
+                dismiss();
+            }
+            return true;
+        }
+        return false;
     }
 
     public interface setSelect{
