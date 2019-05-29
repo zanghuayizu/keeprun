@@ -97,11 +97,11 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="22dp"
+                android:background="@drawable/bg_shape_fox_edit_text"
+                android:gravity="center"
                 android:imeOptions="flagNoExtractUi"
                 android:maxLength="8"
-                android:background="@drawable/bg_shape_fox_edit_text"
                 android:minWidth="112dp"
-                android:gravity="center"
                 android:textSize="25sp" />
         </RelativeLayout>
 
@@ -212,7 +212,7 @@
                 android:text="目标步数"
                 android:textSize="25sp" />
 
-            <com.example.liaodh.keeprun.view.commod.FoxTextButton
+            <com.example.liaodh.keeprun.view.commod.FoxEditTextView
                 android:id="@+id/user_step_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -222,6 +222,7 @@
                 android:background="@drawable/bg_shape_fox_edit_text"
                 android:gravity="center"
                 android:inputType="number"
+                android:maxLength="8"
                 android:minWidth="112dp"
                 android:textSize="25sp" />
         </RelativeLayout>

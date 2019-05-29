@@ -13,9 +13,22 @@ import android.view.WindowManager;
 
 import com.example.liaodh.keeprun.R;
 import com.example.liaodh.keeprun.databinding.ActivityUserEditBinding;
+import com.example.liaodh.keeprun.util.HttpUtil;
 import com.example.liaodh.keeprun.util.SpUserInfoUtil;
+import com.example.liaodh.keeprun.view.commod.CommonToast;
 import com.example.liaodh.keeprun.view.login.LoginDialogSecondFragment;
 import com.example.liaodh.keeprun.view.login.SelectHeightWeightDialogFragment;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+import static org.litepal.LitePalApplication.getContext;
 
 public class UserEditActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -42,6 +55,7 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
         mBinding.userHeight.setOnClickListener(this);
         mBinding.userWeight.setOnClickListener(this);
         mBinding.userImage.setOnClickListener(this);
+        mBinding.userStepLong.setOnClickListener(this);
 
         setViewData();
     }
@@ -81,6 +95,9 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
             case R.id.user_weight:
                 goSelect(2);
                 break;
+            case R.id.user_step_long:
+                goSelect(3);
+                break;
         }
     }
 
@@ -93,6 +110,8 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
                     mBinding.userHeight.setText(String.valueOf(current + 100));
                 } else if (i == 2) {
                     mBinding.userWeight.setText(String.valueOf(current + 30));
+                }else {
+                    mBinding.userStepLong.setText(String.valueOf((current+5)*10));
                 }
             }
         });
@@ -113,7 +132,46 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void saveServer() {
+        String url = HttpUtil.baseUrl + "saveUserInfo?"
+                +"userId="+SpUserInfoUtil.getUserId()
+                +"&userName="+SpUserInfoUtil.getUserName()
+                +"&sex="+SpUserInfoUtil.getIsBoy()
+                +"&height="+SpUserInfoUtil.getUserHeight()
+                +"&weight="+SpUserInfoUtil.getUserWeight()
+                +"&stepLong="+SpUserInfoUtil.getStepLong()
+                +"&stepNum="+SpUserInfoUtil.getStepNum();
+        HttpUtil.saveUserInfo(url, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        CommonToast.showShortToast("网络错误");
+                    }
+                });
+            }
 
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response.body().string());
+                            String code = jsonObject.optString("resCode");
+                            if (code.equals("202")){
+                                CommonToast.showShortToast("保存成功");
+                            }else {
+                                CommonToast.showShortToast("网络错误");
+                            }
+                        } catch (JSONException | IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+            }
+        });
     }
 
 

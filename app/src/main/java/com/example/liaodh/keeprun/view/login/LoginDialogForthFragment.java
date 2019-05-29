@@ -20,14 +20,22 @@ import android.view.ViewGroup;
 
 import com.example.liaodh.keeprun.R;
 import com.example.liaodh.keeprun.databinding.LogindialogFragmentForthBinding;
+import com.example.liaodh.keeprun.util.HttpUtil;
 import com.example.liaodh.keeprun.util.SpUserInfoUtil;
 import com.example.liaodh.keeprun.view.BaseDialogFragment;
 import com.example.liaodh.keeprun.view.MainActivity;
 import com.example.liaodh.keeprun.view.commod.CommonToast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -85,13 +93,53 @@ public class LoginDialogForthFragment extends BaseDialogFragment implements OnCl
     }
 
     private void saveUserInfo() {
-        if (getActivity() != null){
-            Intent intent = new Intent(getContext(),MainActivity.class);
-            startActivity(intent);
-            getActivity().finish();
-        }
-        SpUserInfoUtil.setUserIsLogin(true);
-        dismiss();
+        String url = HttpUtil.baseUrl + "saveUserInfo?"
+                +"userId="+SpUserInfoUtil.getUserId()
+                +"&userName="+SpUserInfoUtil.getUserName()
+                +"&sex="+SpUserInfoUtil.getIsBoy()
+                +"&height="+SpUserInfoUtil.getUserHeight()
+                +"&weight="+SpUserInfoUtil.getUserWeight()
+                +"&stepLong="+SpUserInfoUtil.getStepLong()
+                +"&stepNum="+SpUserInfoUtil.getStepNum();
+        HttpUtil.saveUserInfo(url, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        CommonToast.showShortToast("登录失败");
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response.body().string());
+                            String code = jsonObject.optString("resCode");
+                            if (code.equals("202")){
+                                if (getActivity() != null){
+                                    Intent intent = new Intent(getContext(),MainActivity.class);
+                                    startActivity(intent);
+                                    getActivity().finish();
+                                }
+                                SpUserInfoUtil.setUserIsLogin(true);
+                                dismiss();
+                            }else {
+                                CommonToast.showShortToast("网络错误");
+                            }
+                        } catch (JSONException | IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+            }
+        });
+
     }
 
     private void takePhoto() {

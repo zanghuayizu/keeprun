@@ -1,4 +1,4 @@
-package com.example.liaodh.keeprun.view.commod;
+package com.example.liaodh.keeprun.view;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -11,20 +11,31 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.liaodh.keeprun.R;
 import com.example.liaodh.keeprun.databinding.ActivityReviewBinding;
+import com.example.liaodh.keeprun.util.HttpUtil;
+import com.example.liaodh.keeprun.util.SpUserInfoUtil;
+import com.example.liaodh.keeprun.view.commod.CommonToast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 import static org.litepal.LitePalApplication.getContext;
 
 public class ReviewDataActivity extends AppCompatActivity {
     private ActivityReviewBinding mBinding;
-    private HashMap<Integer,ArrayList> mFeedBackMap;
+    private HashMap<Integer, ArrayList> mFeedBackMap;
     private ReviewDataActivity.MyAdapter mAdapter;
 
 
@@ -41,7 +52,7 @@ public class ReviewDataActivity extends AppCompatActivity {
     private void initView() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_review);
         initListener();
-        initListView();
+        initFeedBackMap();
     }
 
 
@@ -55,7 +66,6 @@ public class ReviewDataActivity extends AppCompatActivity {
     }
 
     private void initListView() {
-        initFeedBackMap();
         mAdapter = new ReviewDataActivity.MyAdapter();
         mBinding.listFeedback.setAdapter(mAdapter);
         mBinding.listFeedback.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -67,14 +77,46 @@ public class ReviewDataActivity extends AppCompatActivity {
     }
 
     private void initFeedBackMap() {
-        mFeedBackMap = new HashMap<>();
-        for (int i = 0;i < 30;i ++){
-            ArrayList subList = new ArrayList<String>();
-            for (int j = 0;j < 5; j ++){
-                subList.add("j="+j);
+        String url = HttpUtil.baseUrl + "getUserRunInfo?" + "userId=" + SpUserInfoUtil.getUserId();
+        HttpUtil.getUserInfo(url, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        CommonToast.showShortToast("网络错误");
+                    }
+                });
             }
-            mFeedBackMap.put(i,subList);
-        }
+
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                if (!response.isSuccessful()) return;
+                try {
+                    JSONArray runInfo = new JSONArray(response.body().string());
+                    mFeedBackMap = new HashMap<Integer, ArrayList>();
+                    for (int i = 0; i < runInfo.length()-1; i++) {
+                        JSONObject object = runInfo.getJSONObject(i);
+                        ArrayList list = new ArrayList();
+                        list.add(object.getString("day"));
+                        list.add(object.getString("runtimes"));
+                        list.add(object.getString("runstep"));
+                        list.add(object.getString("rundis"));
+                        list.add(object.getString("manyi"));
+                        mFeedBackMap.put(i,list);
+                    }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            initListView();
+                        }
+                    });
+                } catch (JSONException | IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
 
     }
 
@@ -98,8 +140,8 @@ public class ReviewDataActivity extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             ReviewDataActivity.MyAdapter.ViewHolder holder = null;
-            if(convertView == null) {
-                convertView = View.inflate(getContext(),R.layout.review_item,null);
+            if (convertView == null) {
+                convertView = View.inflate(getContext(), R.layout.review_item, null);
                 holder = new ReviewDataActivity.MyAdapter.ViewHolder();
                 holder.riqi = convertView.findViewById(R.id.riqi);
                 holder.times = convertView.findViewById(R.id.times);
@@ -114,7 +156,7 @@ public class ReviewDataActivity extends AppCompatActivity {
             ArrayList list;
             list = mFeedBackMap.get(position);
 
-            if (list != null && list.size() > 4){
+            if (list != null && list.size() > 4) {
                 holder.riqi.setText(list.get(0).toString());
                 holder.times.setText(list.get(1).toString());
                 holder.steps.setText(list.get(2).toString());
@@ -124,7 +166,7 @@ public class ReviewDataActivity extends AppCompatActivity {
             return convertView;
         }
 
-        private class ViewHolder{
+        private class ViewHolder {
             TextView riqi;
             TextView times;
             TextView steps;

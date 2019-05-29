@@ -139,7 +139,7 @@ public class RunningManAvtivity extends AppCompatActivity implements SensorEvent
 
     private void save() {
         //保存数据
-        SpUserInfoUtil.setStepNum(mBinding.steps.getText().toString());
+        SpUserInfoUtil.setRunSteps(mBinding.steps.getText().toString());
         SpUserInfoUtil.setRunDis(Float.valueOf(mBinding.runDis.getText().toString()));
         SpUserInfoUtil.setTimes(mBinding.runTime.getText().toString());
         SpUserInfoUtil.setKaluli(mBinding.kaluli.getText().toString());

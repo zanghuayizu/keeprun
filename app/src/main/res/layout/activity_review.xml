@@ -30,11 +30,59 @@
             android:textStyle="bold" />
 
 
+        <LinearLayout
+            android:id="@+id/review_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_title"
+            android:layout_marginTop="5dp">
+
+            <com.example.liaodh.keeprun.view.commod.FoxTextButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="日期"
+                android:textSize="22sp" />
+
+            <com.example.liaodh.keeprun.view.commod.FoxTextButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="时长"
+                android:textSize="22sp" />
+
+            <com.example.liaodh.keeprun.view.commod.FoxTextButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="步数"
+                android:textSize="22sp" />
+
+            <com.example.liaodh.keeprun.view.commod.FoxTextButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="距离"
+                android:textSize="22sp" />
+
+            <com.example.liaodh.keeprun.view.commod.FoxTextButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="满意度"
+                android:textSize="22sp" />
+        </LinearLayout>
+
         <com.example.liaodh.keeprun.view.commod.BounceListView
             android:id="@+id/list_feedback"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/tv_title"
+            android:layout_below="@id/review_layout"
             android:layout_alignParentStart="true"
             android:layout_marginTop="4dp"
             android:divider="@null"

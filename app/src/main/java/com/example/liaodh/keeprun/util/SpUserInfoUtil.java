@@ -270,4 +270,12 @@ public class SpUserInfoUtil {
     public static String getKaluli(){
         return mSp.getString(KALULI,"0");
     }
+
+    private static final String RUN_STEPS = "run_steps";
+    public static void setRunSteps(String s) {
+        mSp.edit().putString(RUN_STEPS,s).commit();
+    }
+    public static String getRunSteps(){
+        return mSp.getString(RUN_STEPS,"");
+    }
 }

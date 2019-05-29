@@ -16,14 +16,15 @@ import com.example.liaodh.keeprun.databinding.FragmentUserBinding;
 import com.example.liaodh.keeprun.util.HttpUtil;
 import com.example.liaodh.keeprun.util.SpUserInfoUtil;
 import com.example.liaodh.keeprun.view.commod.CommonToast;
-import com.example.liaodh.keeprun.view.commod.ReviewDataActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.HttpCookie;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -52,11 +53,9 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initViewData() {
-        SimpleDraweeView draweeView = userBinding.userImage;
-        Uri uri = Uri.parse("res:///" + R.drawable.timg);
-        draweeView.setImageURI(uri);
-        if (SpUserInfoUtil.isUserLogin()){
-            String url = HttpUtil.baseUrl + "getUserInfo?" +"userId=" + "1";
+        initUserInfo();
+        if (SpUserInfoUtil.isUserLogin()) {
+            String url = HttpUtil.baseUrl + "getUserRunInfo?" + "userId=" + SpUserInfoUtil.getUserId();
             HttpUtil.getUserInfo(url, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
@@ -70,10 +69,21 @@ public class UserFragment extends Fragment implements View.OnClickListener {
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    if (response.isSuccessful()){
+                    if (response.isSuccessful()) {
                         try {
-                            JSONObject jsonObject = new JSONObject(response.body().string());
-                            String userName = jsonObject.optString("userName");
+                            JSONArray runInfo = new JSONArray(response.body().string());
+                            JSONObject object = runInfo.getJSONObject(runInfo.length()-1);
+                            SpUserInfoUtil.setWeekTime(String.valueOf(object.optLong("weekTimes")));
+                            SpUserInfoUtil.setWeekDis(String.valueOf(object.optLong("weekDis")));
+                            SpUserInfoUtil.setAllTime(String.valueOf(object.optLong("allTimes")));
+                            SpUserInfoUtil.setAllDis(String.valueOf(object.optLong("allDis")));
+
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    initViewDatas();
+                                }
+                            });
                         } catch (JSONException e) {
                             e.printStackTrace();
 
@@ -81,14 +91,23 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                     }
                 }
             });
-            userBinding.userName.setText(SpUserInfoUtil.getUserName());
-            userBinding.userHeight.setText(SpUserInfoUtil.getUserHeight());
-            userBinding.userWeight.setText(SpUserInfoUtil.getUserWeight());
-            userBinding.weekTime.setText(SpUserInfoUtil.getWeekTime());
-            userBinding.weekDis.setText(SpUserInfoUtil.getWeekDis());
-            userBinding.allTime.setText(SpUserInfoUtil.getAllTime());
-            userBinding.allDis.setText(SpUserInfoUtil.getAllDis());
         }
+    }
+
+    private void initUserInfo() {
+        userBinding.userName.setText(SpUserInfoUtil.getUserName());
+        userBinding.userHeight.setText(SpUserInfoUtil.getUserHeight());
+        userBinding.userWeight.setText(SpUserInfoUtil.getUserWeight());
+        SimpleDraweeView draweeView = userBinding.userImage;
+        Uri uri = Uri.parse("res:///" + R.drawable.timg);
+        draweeView.setImageURI(uri);
+    }
+
+    private void initViewDatas() {
+        userBinding.weekTime.setText(SpUserInfoUtil.getWeekTime());
+        userBinding.weekDis.setText(SpUserInfoUtil.getWeekDis());
+        userBinding.allTime.setText(SpUserInfoUtil.getAllTime());
+        userBinding.allDis.setText(SpUserInfoUtil.getAllDis());
     }
 
     @Override
@@ -96,14 +115,14 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.icon_in:
                 //设置用户信息页面
-                if (getActivity() != null){
-                    Intent intent = new Intent(getActivity(),UserEditActivity.class);
+                if (getActivity() != null) {
+                    Intent intent = new Intent(getActivity(), UserEditActivity.class);
                     startActivity(intent);
                 }
                 break;
             case R.id.review_data_in:
-                if (getActivity() != null){
-                    Intent intent = new Intent(getActivity(),ReviewDataActivity.class);
+                if (getActivity() != null) {
+                    Intent intent = new Intent(getActivity(), ReviewDataActivity.class);
                     startActivity(intent);
                 }
                 break;

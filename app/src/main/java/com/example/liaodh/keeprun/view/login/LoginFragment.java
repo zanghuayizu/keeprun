@@ -23,6 +23,7 @@ import com.example.liaodh.keeprun.view.commod.CommonToast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
@@ -91,7 +92,13 @@ public class LoginFragment extends BaseDialogFragment
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                CommonToast.showShortToast("网络错误");
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        CommonToast.showShortToast("网络错误");
+                    }
+                });
+
             }
 
             @Override
@@ -110,7 +117,7 @@ public class LoginFragment extends BaseDialogFragment
                                 break;
                             case 202:
                                 //登录成功
-                                loginSecceed();
+                                loginSecceed(jsonObject);
                                 break;
                             case 203:
                                 getActivity().runOnUiThread(new Runnable() {
@@ -130,30 +137,72 @@ public class LoginFragment extends BaseDialogFragment
         });
     }
 
-    private void loginSecceed() {
+    private void loginSecceed(JSONObject jsonObject) {
+        if (isEmpty(jsonObject)){
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    CommonToast.showShortToast("完善个人信息");
+                    if (getActivity() != null) {
+                        LoginDialogFirstFragment firstFragment = new LoginDialogFirstFragment();
+                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                        firstFragment.show(ft, getTag());
+                    }
+                    dismiss();
+                }
+            });
+
+        }else {
+            SpUserInfoUtil.setUserId(jsonObject.optString("userId"));
+            SpUserInfoUtil.setUserName(jsonObject.optString("userName"));
+            SpUserInfoUtil.setUserHeight(jsonObject.optString("height"));
+            SpUserInfoUtil.setUserWeight(jsonObject.optString("weight"));
+            SpUserInfoUtil.setIsBoy(jsonObject.optString("sex").equals("boy"));
+            SpUserInfoUtil.setStepLong(jsonObject.optString("stepLong"));
+            SpUserInfoUtil.setStepNum(jsonObject.optString("stepNum"));
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    CommonToast.showShortToast("登录成功");
+                    if (getActivity() != null){
+                        Intent intent = new Intent(getContext(),MainActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }
+                    dismiss();
+                }
+            });
+        }
+    }
+
+    private boolean isEmpty(JSONObject jsonObject) {
+        if (TextUtils.isEmpty(jsonObject.optString("userName"))||
+                TextUtils.isEmpty(jsonObject.optString("height"))||
+                TextUtils.isEmpty(jsonObject.optString("weight"))||
+                TextUtils.isEmpty(jsonObject.optString("sex"))||
+                TextUtils.isEmpty(jsonObject.optString("stepLong"))||
+                TextUtils.isEmpty(jsonObject.optString("stepNum"))){
+            return true;
+        }
+        return false;
+    }
+
+    private void registor() {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                CommonToast.showShortToast("登录成功");
-                if (getActivity() != null){
-                    Intent intent = new Intent(getContext(),MainActivity.class);
-                    startActivity(intent);
-                    getActivity().finish();
+                CommonToast.showShortToast("完善个人信息");
+                if (getActivity() != null) {
+                    LoginDialogFirstFragment firstFragment = new LoginDialogFirstFragment();
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                    firstFragment.show(ft, getTag());
                 }
                 dismiss();
             }
         });
-    }
 
-    private void registor() {
-        CommonToast.showShortToast("完善个人信息");
-        if (getActivity() != null) {
-            LoginDialogFirstFragment firstFragment = new LoginDialogFirstFragment();
-            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            firstFragment.show(ft, getTag());
-        }
-        dismiss();
     }
 
     private boolean isMatcherFinded(String patternStr, CharSequence input) {

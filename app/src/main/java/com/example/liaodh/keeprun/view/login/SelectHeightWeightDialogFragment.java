@@ -48,8 +48,10 @@ public class SelectHeightWeightDialogFragment extends BaseDialogFragment {
     private void initTitle() {
         if (userSelectType == 1){
             mBinding.tvTitle.setText("身高选择 cm");
-        }else {
+        }else if (userSelectType == 2){
             mBinding.tvTitle.setText("体重选择 kg");
+        }else {
+            mBinding.tvTitle.setText("步伐大小 cm");
         }
     }
 
@@ -93,9 +95,13 @@ public class SelectHeightWeightDialogFragment extends BaseDialogFragment {
             for (int i = 0;i <= 126;i++) {
                 mFeedBackMap.put(i, i+100);
             }
-        }else {
+        }else if (userSelectType == 2){
             for (int i = 0;i <= 120;i++) {
                 mFeedBackMap.put(i, i+30);
+            }
+        }else {
+            for (int i = 5;i <= 20;i++) {
+                mFeedBackMap.put(i-5, i*10);
             }
         }
     }

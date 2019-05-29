@@ -14,15 +14,14 @@ import android.view.ViewGroup;
 
 import com.example.liaodh.keeprun.R;
 import com.example.liaodh.keeprun.databinding.LogindialogFragmentSecondBinding;
+import com.example.liaodh.keeprun.databinding.LogindialogFragmentStepBinding;
 import com.example.liaodh.keeprun.util.SpUserInfoUtil;
 import com.example.liaodh.keeprun.view.BaseDialogFragment;
 import com.example.liaodh.keeprun.view.commod.CommonToast;
 
-public class LoginDialogSecondFragment extends BaseDialogFragment
-        implements View.OnClickListener ,DialogInterface.OnKeyListener{
+public class StepFragment extends BaseDialogFragment implements View.OnClickListener ,DialogInterface.OnKeyListener{
 
-
-    private LogindialogFragmentSecondBinding mBinding;
+    private LogindialogFragmentStepBinding mBinding;
 
     @Nullable
     @Override
@@ -32,7 +31,7 @@ public class LoginDialogSecondFragment extends BaseDialogFragment
     }
 
     private View initView(LayoutInflater inflater, ViewGroup container) {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.logindialog_fragment_second, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.logindialog_fragment_step, container, false);
         initListener();
         return mBinding.getRoot();
     }
@@ -40,7 +39,6 @@ public class LoginDialogSecondFragment extends BaseDialogFragment
     private void initListener() {
         mBinding.login.setOnClickListener(this);
         mBinding.userHeight.setOnClickListener(this);
-        mBinding.userWeight.setOnClickListener(this);
         getDialog().setOnKeyListener(this);
     }
 
@@ -51,10 +49,7 @@ public class LoginDialogSecondFragment extends BaseDialogFragment
                 goThird();
                 break;
             case R.id.user_height:
-                goSelect(1);
-                break;
-            case R.id.user_weight:
-                goSelect(2);
+                goSelect(3);
                 break;
             default:
                 break;
@@ -64,13 +59,11 @@ public class LoginDialogSecondFragment extends BaseDialogFragment
     private void goSelect(final int i) {
         if (getActivity() != null) {
             SelectHeightWeightDialogFragment fragment = new SelectHeightWeightDialogFragment();
-            fragment.setSelectListener(i,new setSelect() {
+            fragment.setSelectListener(i,new LoginDialogSecondFragment.setSelect() {
                 @Override
                 public void setSelect(int current) {
-                    if (i == 1){
-                        mBinding.userHeight.setText(String.valueOf(current+100));
-                    }else if (i == 2){
-                        mBinding.userWeight.setText(String.valueOf(current+30));
+                    if (i == 3){
+                        mBinding.userHeight.setText(String.valueOf(current));
                     }
                 }
             });
@@ -82,12 +75,12 @@ public class LoginDialogSecondFragment extends BaseDialogFragment
 
     private void goThird() {
         if (TextUtils.isEmpty(mBinding.userHeight.getText()) || TextUtils.isEmpty(mBinding.userWeight.getText())){
-            CommonToast.showShortToast("请输入身高或者体重");
+            CommonToast.showShortToast("请输入步伐和步数");
         }else {
-            SpUserInfoUtil.setUserHeight(mBinding.userHeight.getText().toString());
-            SpUserInfoUtil.setUserWeight(mBinding.userWeight.getText().toString());
+            SpUserInfoUtil.setStepLong(mBinding.userHeight.getText().toString());
+            SpUserInfoUtil.setStepNum(mBinding.userWeight.getText().toString());
             if (getActivity() != null) {
-                StepFragment thirdFragment = new StepFragment();
+                LoginDialogThirdFragment thirdFragment = new LoginDialogThirdFragment();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 thirdFragment.show(ft, getTag());
@@ -100,7 +93,7 @@ public class LoginDialogSecondFragment extends BaseDialogFragment
     public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK ){
             if (getActivity() != null) {
-                LoginFragment loginFragment = new LoginFragment();
+                LoginDialogSecondFragment loginFragment = new LoginDialogSecondFragment();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 loginFragment.show(ft, getTag());

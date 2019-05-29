@@ -24,4 +24,15 @@ public class HttpUtil {
         Request request = new Request.Builder().url(address).build();
         client.newCall(request).enqueue(callback);
     }
+
+    public static void saveUserInfo(String address,okhttp3.Callback callback) {
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS)
+                .build();
+        Request request = new Request.Builder().url(address).build();
+        client.newCall(request).enqueue(callback);
+    }
+
+
 }
