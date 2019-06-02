@@ -22,6 +22,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.MediaController;
 
+import com.example.liaodh.keeprun.MyApplication;
 import com.example.liaodh.keeprun.R;
 import com.example.liaodh.keeprun.databinding.RunningmanBinding;
 import com.example.liaodh.keeprun.util.SpUserInfoUtil;
@@ -45,7 +46,7 @@ public class RunningManAvtivity extends AppCompatActivity implements SensorEvent
     private Handler mHandler = new Handler();
 
     private long startTime;
-
+    private int steps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,16 +97,43 @@ public class RunningManAvtivity extends AppCompatActivity implements SensorEvent
         run();
     }
 
+    boolean isSaved = false;
     private void initListener() {
         mBinding.start.setOnClickListener(this);
         mBinding.pouse.setOnClickListener(this);
         mBinding.stop.setOnClickListener(this);
         mBinding.stop.setOnLongClickListener(this);
-        mSensorManager.registerListener(this
-                , mSensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR), SensorManager.SENSOR_DELAY_GAME);
+        mBinding.refreshEdit.setOnClickListener(this);
+        mBinding.jingdu.setText("经度："+SpUserInfoUtil.getLng().substring(0,7));
+        mBinding.weidu.setText("纬度："+SpUserInfoUtil.getLat().substring(0,6));
+        MyApplication.setListener(new senSorChange(){
+            @Override
+            public void changed(){
+                if (!isSaved){
+                    mBinding.steps.setText(String.valueOf(++steps));
+
+                    String juli = String.valueOf(steps*Double.valueOf(SpUserInfoUtil.getStepLong())/100000);
+                    if (juli.length() > 5){
+                        juli = juli.substring(0,5);
+                    }
+                    mBinding.runDis.setText(juli);
+
+
+                    String kaluli = String.valueOf(Double.valueOf(SpUserInfoUtil.getUserWeight() )* steps*Double.valueOf(SpUserInfoUtil.getStepLong())/100000*1.036);
+                    if (kaluli.length() > 5){
+                        kaluli = kaluli.substring(0,5);
+                    }
+                    mBinding.kaluli.setText(kaluli);
+                    mBinding.jingdu.setText("经度："+SpUserInfoUtil.getLng().substring(0,7));
+                    mBinding.weidu.setText("纬度："+SpUserInfoUtil.getLat().substring(0,6));
+                }
+            }
+        });
     }
 
-
+    public interface senSorChange{
+        void changed();
+    }
     long pouseTime;
     long reStartTime;
 
@@ -133,6 +161,10 @@ public class RunningManAvtivity extends AppCompatActivity implements SensorEvent
                 mBinding.stop.setVisibility(View.VISIBLE);
                 mBinding.start.setVisibility(View.VISIBLE);
                 mBinding.pouse.setVisibility(View.GONE);
+                break;
+            case R.id.refresh_edit:
+                Intent intent = new Intent(this, TodayMsgActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -208,9 +240,12 @@ public class RunningManAvtivity extends AppCompatActivity implements SensorEvent
             case R.id.stop:
                 task.cancel();
                 mBinding.start.setVisibility(View.INVISIBLE);
+                mBinding.stop.setVisibility(View.GONE);
                 save();
+                isSaved = true;
                 Intent intent = new Intent(this, TodayMsgActivity.class);
                 startActivity(intent);
+                mBinding.refreshEdit.setVisibility(View.VISIBLE);
                 break;
         }
         return true;

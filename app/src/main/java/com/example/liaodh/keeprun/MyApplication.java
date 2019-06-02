@@ -10,6 +10,7 @@ import android.text.TextUtils;
 
 import com.example.liaodh.keeprun.util.LocationUtil;
 import com.example.liaodh.keeprun.util.SpUserInfoUtil;
+import com.example.liaodh.keeprun.view.RunningManAvtivity;
 import com.facebook.drawee.backends.pipeline.Fresco;
 
 import org.litepal.LitePal;
@@ -56,6 +57,9 @@ public class MyApplication extends Application implements SensorEventListener{
         mSteps = event.values[0];
         //只有在日期变化的时候才改变存储的值
         setCurrentDay(mSteps);
+        if (listener != null){
+            listener.changed();
+        }
         SpUserInfoUtil.setTodaySteps(mSteps);
     }
     @Override
@@ -90,4 +94,10 @@ public class MyApplication extends Application implements SensorEventListener{
             }
         }
     }
+
+    private static RunningManAvtivity.senSorChange listener = null;
+    public static void setListener(RunningManAvtivity.senSorChange change){
+        listener = change;
+    }
+
 }

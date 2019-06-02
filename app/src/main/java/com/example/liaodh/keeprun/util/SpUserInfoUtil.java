@@ -2,6 +2,7 @@ package com.example.liaodh.keeprun.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 
 import com.example.liaodh.keeprun.MyApplication;
 

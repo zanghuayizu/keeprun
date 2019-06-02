@@ -3,10 +3,12 @@ package com.example.liaodh.keeprun.view;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,6 +32,8 @@ import java.util.HashMap;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+
+import static org.litepal.LitePalApplication.getContext;
 
 public class UserFragment extends Fragment implements View.OnClickListener {
 
@@ -93,14 +98,20 @@ public class UserFragment extends Fragment implements View.OnClickListener {
             });
         }
     }
-
+    private Uri imageUri;
+    private File outputImage;
     private void initUserInfo() {
         userBinding.userName.setText(SpUserInfoUtil.getUserName());
         userBinding.userHeight.setText(SpUserInfoUtil.getUserHeight());
         userBinding.userWeight.setText(SpUserInfoUtil.getUserWeight());
-        SimpleDraweeView draweeView = userBinding.userImage;
-        Uri uri = Uri.parse("res:///" + R.drawable.timg);
-        draweeView.setImageURI(uri);
+        outputImage = new File(getActivity().getExternalCacheDir(),"output_image.jpg");
+        if (Build.VERSION.SDK_INT >= 24){
+            imageUri = FileProvider.getUriForFile(getContext(),
+                    "com.example.liaodh.keeprun.fileprovider",outputImage);
+        }else {
+            imageUri = Uri.fromFile(outputImage);
+        }
+        userBinding.userImage.setImageURI(imageUri);
     }
 
     private void initViewDatas() {

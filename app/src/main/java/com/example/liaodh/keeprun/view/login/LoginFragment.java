@@ -161,6 +161,7 @@ public class LoginFragment extends BaseDialogFragment
             SpUserInfoUtil.setIsBoy(jsonObject.optString("sex").equals("boy"));
             SpUserInfoUtil.setStepLong(jsonObject.optString("stepLong"));
             SpUserInfoUtil.setStepNum(jsonObject.optString("stepNum"));
+            SpUserInfoUtil.setUserIsLogin(true);
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

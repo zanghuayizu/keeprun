@@ -3,4 +3,5 @@
     <dimen name="activity_bottom_textsize">22sp</dimen>
     <dimen name="fox_edit_text_width">17dp</dimen>
     <dimen name="fox_edit_text_height">17dp</dimen>
+    <dimen name="with_height_460">460dp</dimen>
 </resources>

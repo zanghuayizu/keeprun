@@ -2,11 +2,15 @@ package com.example.liaodh.keeprun.view;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -22,6 +26,7 @@ import com.example.liaodh.keeprun.view.login.SelectHeightWeightDialogFragment;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -34,6 +39,8 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
 
     private static final String TAG = "UserEditActivity";
     private ActivityUserEditBinding mBinding;
+    private Uri imageUri;
+    private File outputImage;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,7 +63,14 @@ public class UserEditActivity extends AppCompatActivity implements View.OnClickL
         mBinding.userWeight.setOnClickListener(this);
         mBinding.userImage.setOnClickListener(this);
         mBinding.userStepLong.setOnClickListener(this);
-
+        outputImage = new File(getExternalCacheDir(),"output_image.jpg");
+        if (Build.VERSION.SDK_INT >= 24){
+            imageUri = FileProvider.getUriForFile(getContext(),
+                    "com.example.liaodh.keeprun.fileprovider",outputImage);
+        }else {
+            imageUri = Uri.fromFile(outputImage);
+        }
+        mBinding.userImage.setImageURI(imageUri);
         setViewData();
     }
 

@@ -9,6 +9,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        ndk {
+            abiFilters "armeabi-v7a"
+        }
+
     }
     buildTypes {
         release {
@@ -18,6 +23,11 @@ android {
     }
     dataBinding {
         enabled = true
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
     }
 }
 
@@ -40,5 +50,5 @@ dependencies {
     implementation 'com.facebook.fresco:fresco:0.14.1'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
-
+    implementation files('libs/libandroid_tensorflow_inference_java.jar')
 }

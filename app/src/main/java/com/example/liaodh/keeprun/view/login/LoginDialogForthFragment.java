@@ -155,7 +155,7 @@ public class LoginDialogForthFragment extends BaseDialogFragment implements OnCl
             }
             if (Build.VERSION.SDK_INT >= 24){
                 imageUri = FileProvider.getUriForFile(this.getContext(),
-                        "om.example.liaodh.keeprun.fileprovider",outputImage);
+                        "com.example.liaodh.keeprun.fileprovider",outputImage);
             }else {
                 imageUri = Uri.fromFile(outputImage);
             }

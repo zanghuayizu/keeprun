@@ -10,6 +10,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.example.liaodh.keeprun.R;
+
 /**
  * This view implements the drawing canvas.
  * <p/>
@@ -41,26 +43,29 @@ public class PaintView extends View {
     private void init(int width,int height) {
         paint = new Paint();
         paint.setAntiAlias(true);
-        paint.setStrokeWidth(13);
+        paint.setStrokeWidth(30);
         paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.BLACK);
+        paint.setColor(Color.parseColor("#ffffff"));
         path = new Path();
-        cachebBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        cachebBitmap = Bitmap.createBitmap(1,1, Bitmap.Config.ARGB_8888);
         cacheCanvas = new Canvas(cachebBitmap);
-        cacheCanvas.drawColor(Color.WHITE);
+        cacheCanvas.drawColor(Color.parseColor("#444444"));
     }
 
     public void clear() {
         if (cacheCanvas != null) {
-
-            paint.setColor(Color.WHITE);
+            paint.setColor(Color.parseColor("#444444"));
             cacheCanvas.drawPaint(paint);
-            paint.setColor(Color.BLACK);
-            cacheCanvas.drawColor(Color.WHITE);
+            paint.setColor(Color.parseColor("#ffffff"));
             invalidate();
         }
     }
 
+    public void recycle(){
+        paint.reset();
+        cachebBitmap.recycle();
+        path.reset();
+    }
 
     @Override
     protected void onDraw(Canvas canvas) {

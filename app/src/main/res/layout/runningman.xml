@@ -28,10 +28,10 @@
 
                     <ImageView
                         android:id="@+id/compass"
-                        android:layout_marginTop="12dp"
                         android:layout_width="120dp"
                         android:layout_height="120dp"
                         android:layout_centerHorizontal="true"
+                        android:layout_marginTop="12dp"
                         android:src="@drawable/compass" />
 
                     <TextView
@@ -48,8 +48,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="6dp"
                         android:layout_marginLeft="22dp"
+                        android:layout_marginBottom="6dp"
                         android:text="纬度 "
                         android:textSize="22sp" />
 
@@ -165,6 +165,17 @@
                     android:layout_centerInParent="true"
                     android:src="@drawable/pouse" />
 
+                <com.example.liaodh.keeprun.view.commod.FoxTextButton
+                    android:id="@+id/refresh_edit"
+                    android:layout_width="130dp"
+                    android:layout_height="66dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/send_verify"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:text="重新打分"
+                    android:textSize="28sp" />
+
                 <com.example.liaodh.keeprun.view.commod.CircleImageView
                     android:id="@+id/stop"
                     android:layout_width="120dp"
@@ -190,20 +201,19 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
-            android:layout_centerInParent="true">
+            android:layout_centerInParent="true"
+            >
 
             <VideoView
                 android:id="@+id/video"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fitsSystemWindows="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
-                 />
+                android:fitsSystemWindows="true" />
         </RelativeLayout>
     </RelativeLayout>
 </layout>
